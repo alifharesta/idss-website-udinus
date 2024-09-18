@@ -1,15 +1,15 @@
 import React from 'react'
-import NavbarLP from '../components/LandingPage/NavbarLP'
+import NavbarCp from '../components/LandingPage/NavbarCp'
 import HeroSection from '../components/LandingPage/HeroSection'
-import News from "../components/LandingPage/News";
 import Footer from '../components/LandingPage/Footer'
+import LatestNews from '../components/LandingPage/LatestNews';
 
 export default function LandingPage() {
   return (
     <div>
-    <NavbarLP />
+    <NavbarCp />
     <HeroSection />
-    <News />
+    <LatestNews />
     <Footer />
     </div>
   )

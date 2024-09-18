@@ -3,13 +3,15 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     screens: {
-      "sm": "320px",
-      "md": "768px",
-      "lg": "1024px",
-      "xl": "1440px",
+      "sm": "640px", // mobile
+      "md": "768px", // tablet
+      "lg": "1024px", // laptop
+      "xl": "1280px", // desktop
+      "2xl": "1536px", // tv or large desktop
     },
     extend: {
       fontFamily: {
@@ -25,10 +27,11 @@ export default {
   },
   plugins: [
     require("daisyui"),
+    require('flowbite/plugin')
   ],
   daisyui: {
     themes: [
-      "retro", // Tema default
+      "bumblebee", // Tema default
       // Tambahkan tema kustom atau tema DaisyUI lainnya di sini
     ],
   },

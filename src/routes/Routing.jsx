@@ -3,8 +3,9 @@ import LandingPage from "../pages/LandingPage";
 import AboutUs from "../pages/AboutUs";
 import ProfilesPages from '../pages/ProfilesPages';
 import NewsDetail from '../components/News/NewsDetail';
-import News from '../components/LandingPage/News';
-
+import News from '../pages/News';
+import Login from '../pages/Login';
+import Dashboard from '../components/layout/Dashboard';
 function Routing(){
     return (
         <Router>
@@ -14,6 +15,8 @@ function Routing(){
                     <Route path="/profiles" element={<ProfilesPages />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/news/:slug" element={<NewsDetail />} />
+                    <Route path="/dashboard" element={<Dashboard    />} />
+                    <Route path="/login" element={<Login />} /> 
                     </Routes>
         </Router>
     );
