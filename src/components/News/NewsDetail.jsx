@@ -3,10 +3,11 @@ import news1 from "../../assets/landingpage/news1.jpg";
 import ricardus from "../../assets/landingpage/ricardus.jpg";
 import NavbarCp from "../LandingPage/NavbarCp";
 import arrow from "../../assets/landingpage/arrow.png";
-import oncodoc from "../../assets/landingpage/oncodoc.jpg";
 import oncodoc1 from "../../assets/landingpage/oncodoc1.jpg";
 import oncodoc2 from "../../assets/landingpage/oncodoc2.jpg";
 import oncodoc3 from "../../assets/landingpage/oncodoc3.jpg";
+import dinustek from "../../assets/landingpage/dinustek.jpg";
+import xray from "../../assets/landingpage/xray.jpg"; 
 
 export default function NewsDetail() {
   const { slug } = useParams();
@@ -421,18 +422,47 @@ export default function NewsDetail() {
               Abu Salam, the head of the event, explained that the main goal of
               the activity is to provide knowledge and tools needed for the
               students to maintain their health, which in turn will help them in
-              their educational process.
-              The activity received positive feedback from the orphanage
-              children, who felt better informed about the importance of healthy
-              living behaviors and the use of technology for monitoring their
-              health. With this program, it is hoped that students will become
-              more self-reliant in maintaining their health and managing their
-              daily activities more effectively.<br></br>
+              their educational process. The activity received positive feedback
+              from the orphanage children, who felt better informed about the
+              importance of healthy living behaviors and the use of technology
+              for monitoring their health. With this program, it is hoped that
+              students will become more self-reliant in maintaining their health
+              and managing their daily activities more effectively.<br></br>
               <br></br>
               This activity is a tangible example of DREAMS' commitment to
               applying scientific knowledge for the community and directly
               contributing to the improvement of quality of life and community
               health.
+            </p>
+          </>
+        ),
+      },
+      "automated-xray": {
+        title3: (
+          <h1 className="text-4xl font-poppins font-bold">
+            Integrating AI Imaging and LLMs to Develop Automated X-ray Radiology
+            Report System
+          </h1>
+        ),
+        content3: (
+          <>
+            <div className="carousel w-full rounded-md">
+              <div id="slide2" className="carousel-item relative w-full">
+                <img src={xray} className="flex w-[850px] translate-x-1/4 mb-10" />
+                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                </div>
+              </div>
+            </div>
+            <p className="text-xl font-poppins leading-loose text-justify mt-5 mb-10">
+              DREAMS (Dinus Research Group for AI in Medical Science), part of
+              IDSS, in collaboration with DINUSTEK, is developing a
+              disease-detection application focused on the chest area. The
+              application can detect various diseases such as Atelectasis,
+              Consolidation, Infiltration, Pneumothorax, and Edema using X-ray
+              images. It identifies disease-affected areas in the chest by
+              automatically providing mask annotations and generating radiology
+              diagnosis reports. The application leverages deep learning and
+              Large Language Models (LLMs) as its core approaches.
             </p>
           </>
         ),
@@ -477,6 +507,11 @@ export default function NewsDetail() {
         <h1 className="text-4xl font-poppins font-bold">{artikel.title2}</h1>
         {artikel.cover2}
         <p className="mt-10">{artikel.content2}</p>
+
+        {/* artikel 4 Ai Imaging  */}
+        <h1 className="text-4xl font-poppins font-bold">{artikel.title3}</h1>
+        {artikel.cover3}
+        <p className="mt-10">{artikel.content3}</p>
       </section>
     </>
   );

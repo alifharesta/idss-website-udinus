@@ -3,6 +3,7 @@ import bgnews1 from "../../assets/landingpage/bgnews1.png";
 import news1 from "../../assets/landingpage/news1.jpg";
 import ricardus from "../../assets/landingpage/ricardus.jpg";
 import oncodoc from "../../assets/landingpage/oncodoc.jpg";
+import fotoxray from "../../assets/landingpage/fotoxray.png"; 
 import { useNavigate } from "react-router-dom";
 
 export default function LatestNews() {
@@ -45,7 +46,6 @@ export default function LatestNews() {
               >
                 DRTPM 2024 Grants Awarded to 19 Research Projects at IDSS,
                 Exploring AI, Data Security, and HPC
-                <div className="badge badge-warning">NEW</div>
               </h2>
               <p className="line-clamp-2">
                 Several lecturers have successfully obtained grant funds from
@@ -82,7 +82,6 @@ export default function LatestNews() {
               >
                 Dr. Ricardus Receives DRTPM KATALIS Grant for Agriculture
                 Research
-                <div className="badge badge-warning">NEW</div>
               </h2>
               <p className="line-clamp-2">
                 Dr. Ricardus Anggi Pramunendar successfully obtained funding
@@ -130,7 +129,47 @@ export default function LatestNews() {
                 led by Budi Tri Priambodo, the head of the orphanage.
               </p>
               <div className="card-actions justify-end mt-2">
-                <div className="badge badge-outline">August 25, 2024</div>
+                <div className="badge badge-outline">September 7, 2024</div>
+                <div className="badge badge-outline">Admin IDSS</div>
+              </div>
+            </div>
+          </div>
+
+          {/* artikel 4 */}
+          <div className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[400px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl">
+            <figure
+              onClick={() => handleNewsDetail("automated-xray")}
+              className="cursor-pointer"
+            >
+              <img
+                src={fotoxray}
+                className="bg-cover w-96 h-[300px]"
+                alt="ai imaging"
+              />
+            </figure>
+            <div className="card-body h-fit">
+              <h2
+                onClick={() => handleNewsDetail("automated-xray")}
+                className="cursor-pointer card-title text-lg font-poppins"
+              >
+                Integrating AI Imaging and LLMs to Develop Automated X-ray
+                Radiology Report System
+                <div className="badge badge-warning">NEW</div>
+              </h2>
+              <p className="line-clamp-2">
+                DREAMS (Dinus Research Group for AI in Medical Science), part of
+                IDSS, in collaboration with DINUSTEK, is developing a
+                disease-detection application focused on the chest area. The
+                application can detect various diseases such as Atelectasis,
+                Consolidation, Infiltration, Pneumothorax, and Edema using X-ray
+                images. It identifies disease-affected areas in the chest by
+                automatically providing mask annotations and generating
+                radiology diagnosis reports. The application leverages deep
+                learning and Large Language Models (LLMs) as its core
+                approaches.
+              </p>
+              <div className="card-actions justify-end mt-2">
+                <div className="badge badge-outline">September 7, 2024</div>
                 <div className="badge badge-outline">Admin IDSS</div>
               </div>
             </div>
