@@ -447,9 +447,26 @@ export default function NewsDetail() {
         content3: (
           <>
             <div className="carousel w-full rounded-md">
-              <div id="slide2" className="carousel-item relative w-full">
-                <img src={xray} className="flex w-[850px] translate-x-1/4 mb-10" />
+            <div id="slide1" className="carousel-item relative w-full">
+                <img src={dinustek} className="w-full" />
                 <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                  <a href="#slide2" className="btn btn-circle">
+                    ❮
+                  </a>
+                  <a href="#slide2" className="btn btn-circle">
+                    ❯
+                  </a>
+                </div>
+              </div>
+              <div id="slide2" className="carousel-item relative w-full">
+                <img src={xray} className="w-full" />
+                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                  <a href="#slide1" className="btn btn-circle">
+                    ❮
+                  </a>
+                  <a href="#slide1" className="btn btn-circle">
+                    ❯
+                  </a>
                 </div>
               </div>
             </div>
