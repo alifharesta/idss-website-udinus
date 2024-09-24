@@ -3,8 +3,50 @@ import bgnews1 from "../../assets/landingpage/bgnews1.png";
 import news1 from "../../assets/landingpage/news1.jpg";
 import ricardus from "../../assets/landingpage/ricardus.jpg";
 import oncodoc from "../../assets/landingpage/oncodoc.jpg";
-import fotoxray from "../../assets/landingpage/fotoxray.png"; 
+import fotoxray from "../../assets/landingpage/fotoxray.png";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import arrowup from "../../assets/landingpage/arrowup.png";
+
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisibility);
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility);
+    };
+  }, []);
+
+  return (
+    <div className="fixed bottom-8 right-14">
+      <button
+        type="button"
+        onClick={scrollToTop}
+        className={`${
+          isVisible ? "opacity-100" : "opacity-0"
+        } bg-blue-600 hover:bg-blue-700  inline-flex items-center rounded-full p-3 text-white shadow-sm transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2`}
+      >
+        <img src={arrowup} className="h-6 w-6" aria-hidden="true" />
+      </button>
+    </div>
+  );
+};
 
 export default function LatestNews() {
   const navigate = useNavigate();
@@ -169,13 +211,14 @@ export default function LatestNews() {
                 approaches.
               </p>
               <div className="card-actions justify-end mt-2">
-                <div className="badge badge-outline">September 7, 2024</div>
+                <div className="badge badge-outline">September 18, 2024</div>
                 <div className="badge badge-outline">Admin IDSS</div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <ScrollToTopButton />
     </>
   );
 }

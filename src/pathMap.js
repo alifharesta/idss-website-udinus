@@ -1,6 +1,6 @@
 export const nameMap = {
   "/login": "Login",
-  "/dashboard": "Dashboard",
+  "/dashboard": "Dashboard Admin",  
   "/dashboard/manage-news": "Manage News",
   "/dashboard/manage-news/add": "Add News",
   "/dashboard/manage-news/edit": "Edit News",
