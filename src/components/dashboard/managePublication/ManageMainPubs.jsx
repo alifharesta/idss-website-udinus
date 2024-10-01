@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ManageMain() {
+export default function ManageMainPublication() {
   return (
     <div>ManageMain</div>
   )
