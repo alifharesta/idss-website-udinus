@@ -495,7 +495,7 @@ export default function NewsDetail() {
   const navigate = useNavigate();
 
   const handleClickBack = () => {
-    navigate("/");
+    navigate("/news");
   };
 
   return (

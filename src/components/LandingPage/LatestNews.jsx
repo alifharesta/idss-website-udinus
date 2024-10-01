@@ -5,6 +5,7 @@ import ricardus from "../../assets/landingpage/ricardus.jpg";
 import oncodoc from "../../assets/landingpage/oncodoc.jpg";
 import fotoxray from "../../assets/landingpage/fotoxray.png";
 import { useNavigate } from "react-router-dom";
+import { duration } from "@mui/material";
 
 export default function LatestNews() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function LatestNews() {
   //handler ke view more
   const handleViewMore = () => {
     navigate("/news");
-  }
+  };
 
   return (
     <>
@@ -144,13 +145,14 @@ export default function LatestNews() {
               </div>
             </div>
           </div>
-
-          
         </div>
         <div className="mt-8 text-center">
-          <button onClick={handleViewMore} className="bg-blue-900 text-white font-bold py-2 px-4 rounded-lg">
+          <button
+            onClick={handleViewMore}
+            className="bg-blue-900 text-white font-bold py-2 px-4 rounded-lg"
+          >
             View More
-          </button> 
+          </button>
         </div>
       </section>
     </>
