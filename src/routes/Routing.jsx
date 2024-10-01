@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";
-import FormPage from "../components/layouts/FormPage"
+import FormPage from "../components/layouts/FormPage";
 import Dashboard from "../components/layouts/Dashboard";
 import ManageEvent from "../components/dashboard/manageEvent/ManageMainEvent";
 import AddEvent from "../components/dashboard/manageEvent/AddEvent";
@@ -17,7 +17,7 @@ import EditDeletePub from "../components/dashboard/managePublication/EditDeleteP
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 
- const router = createBrowserRouter([
+const router = createBrowserRouter([
   { index: true, element: <LandingPage /> },
   {
     path: "/dashboard",

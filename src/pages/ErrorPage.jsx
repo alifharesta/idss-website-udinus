@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import NotFound from '../assets/icons/error/error.svg'
+import NotFound from "../assets/landingpage/error.svg";
 
 export default function Error () {
     return (
