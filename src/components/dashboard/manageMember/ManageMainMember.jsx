@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function ManageMainMember() {
   return (
-    <div>ManageMain</div>
+    <div>Manage Member</div>
   )
 }
