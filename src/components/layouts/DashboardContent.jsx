@@ -1,5 +1,4 @@
 // src/components/dashboard/DashboardContent.jsx
-import React from 'react';
 
 function DashboardContent() {
   return (

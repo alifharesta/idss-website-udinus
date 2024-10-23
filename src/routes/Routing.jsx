@@ -3,6 +3,7 @@ import LandingPage from "../pages/LandingPage";
 import AboutUs from "../pages/AboutUs";
 import ProfilesPages from "../pages/ProfilesPages";
 import News from "../pages/News";
+import NewsDetail from "../components/News/NewsDetail";
 import FormPage from "../components/layouts/FormPage";
 import Dashboard from "../components/layouts/Dashboard";
 import DashboardContent from "../components/layouts/DashboardContent"; // Pastikan file ini ada
@@ -21,57 +22,61 @@ import EditDeletePub from "../components/dashboard/managePublication/EditDeleteP
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 
+// User Routes
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
   { path: "/about", element: <AboutUs /> },
   { path: "/profiles", element: <ProfilesPages /> },
-  { path: "/news", element: <News/> },
+  { path: "/news", element: <News /> },
+  { path: "news/:slug", element: <NewsDetail /> },
+
+  // Admin Routes
   {
     path: "/dashboard",
     element: <Dashboard />,
     children: [
       { index: true, element: <DashboardContent /> }, // Konten default untuk /dashboard
-      { path: "news", element: <ManageNews /> },
-      { path: "events", element: <ManageEvent /> },
-      { path: "publications", element: <ManagePublication /> },
-      { path: "members", element: <ManageMember /> },
+      { path: "manage-news", element: <ManageNews /> },
+      { path: "manage-events", element: <ManageEvent /> },
+      { path: "manage-publications", element: <ManagePublication /> },
+      { path: "manage-members", element: <ManageMember /> },
       {
-        path: "news/add",
+        path: "manage-news/add",
         element: <FormPage />,
         children: [{ index: true, element: <AddNews /> }],
       },
       {
-        path: "news/edit/:id",
+        path: "manage-news/edit/:id",
         element: <FormPage />,
         children: [{ index: true, element: <EditDeleteNews /> }],
       },
       {
-        path: "event/add",
+        path: "manage-events/add",
         element: <FormPage />,
         children: [{ index: true, element: <AddEvent /> }],
       },
       {
-        path: "event/edit/:id",
+        path: "manage-events/edit/:id",
         element: <FormPage />,
         children: [{ index: true, element: <EditDeleteEvent /> }],
       },
       {
-        path: "publication/add",
+        path: "manage-publications/add",
         element: <FormPage />,
         children: [{ index: true, element: <AddPublication /> }],
       },
       {
-        path: "publication/edit/:id",
+        path: "manage-publications/edit/:id",
         element: <FormPage />,
         children: [{ index: true, element: <EditDeletePub /> }],
       },
       {
-        path: "member/add",
+        path: "manage-members/add",
         element: <FormPage />,
         children: [{ index: true, element: <AddMember /> }],
       },
       {
-        path: "member/edit/:id",
+        path: "manage-members/edit/:id",
         element: <FormPage />,
         children: [{ index: true, element: <EditDeleteMember /> }],
       },

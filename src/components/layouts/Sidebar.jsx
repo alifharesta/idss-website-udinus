@@ -8,14 +8,14 @@ import membericon from "../../assets/landingpage/membericon.png";
 import adminicon from "../../assets/landingpage/adminicon.png";
 
 const navItems = [
-  { to: "/dashboard", icon: dashboardicon, label: "Dashboard" },
-  { to: "/dashboard/news", icon: newsdb, label: "News" },
-  { to: "/dashboard/events", icon: eventicon, label: "Event" },
-  { to: "/dashboard/members", icon: membericon, label: "Members" },
-  { to: "/dashboard/publications", icon: paper, label: "Publications" },
+  { to: "/dashboard", icon: dashboardicon, label: "Dashboard", end: true },
+  { to: "/dashboard/manage-news", icon: newsdb, label: "News" },
+  { to: "/dashboard/manage-events", icon: eventicon, label: "Event" },
+  { to: "/dashboard/manage-members", icon: membericon, label: "Members" },
+  { to: "/dashboard/manage-publications", icon: paper, label: "Publications" },
 ];
 
-const NavItem = ({ to, icon, label }) => (
+const NavItem = ({ to, icon, label, end }) => (
   <NavLink
     className={({ isActive }) =>
       `flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-500 ${
@@ -23,6 +23,7 @@ const NavItem = ({ to, icon, label }) => (
       }`
     }
     to={to}
+    end={end}
   >
     <img src={icon} className="w-5 h-5" alt={label} />
     <span className="ms-3">{label}</span>
