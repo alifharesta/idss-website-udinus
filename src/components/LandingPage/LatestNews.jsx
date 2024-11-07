@@ -1,29 +1,85 @@
 import bgnews from "../../assets/landingpage/bgnews.png";
 import bgnews1 from "../../assets/landingpage/bgnews1.png";
-import news1 from "../../assets/landingpage/news1.jpg";
-import ricardus from "../../assets/landingpage/ricardus.jpg";
-import oncodoc from "../../assets/landingpage/oncodoc.jpg";
-import fotoxray from "../../assets/landingpage/fotoxray.png";
 import { useNavigate } from "react-router-dom";
-import { duration } from "@mui/material";
+import { useState, useEffect } from "react";
+import { supabase } from "../../services/supabaseClient";
+import { format, parseISO } from "date-fns";
+import { id } from "date-fns/locale";
+import Swal from "sweetalert2";
 
 export default function LatestNews() {
   const navigate = useNavigate();
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  //handler ke news detail dengan slug
+  useEffect(() => {
+    fetchLatestNews();
+  }, []);
+
+  async function fetchLatestNews() {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("news")
+        .select("*")
+        .order("published_at", { ascending: false })
+        .limit(3); //Show 3 latest news
+
+      if (error) throw error;
+
+      console.log("Fetched latest news:", data);
+      setNews(data);
+    } catch (error) {
+      console.error("Error fetching latest news:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error fetching latest news: " + error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Format date with null check
+  const formatDate = (dateString) => {
+    if (!dateString) return "No date";
+    try {
+      return format(parseISO(dateString), "dd MMMM yyyy", { locale: id });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Invalid date";
+    }
+  };
+
+  // Check if date is recent (within 7 days) with null check
+  const isRecent = (dateString) => {
+    if (!dateString) return false;
+    try {
+      const date = parseISO(dateString);
+      return date >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    } catch (error) {
+      console.error("Error checking date:", error);
+      return false;
+    }
+  };
+
   const handleNewsDetail = (slug) => {
     navigate(`/news/${slug}`);
   };
 
-  //handler ke view more
   const handleViewMore = () => {
     navigate("/news");
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <section className="mx-auto py-20 px-0">
-        <div className="mt-40 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
+        <div className="mt-40 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center">
           Latest News
         </div>
         <div className="left-0 right-0 justify-left absolute mt-10">
@@ -32,121 +88,60 @@ export default function LatestNews() {
         <div className="right-0 absolute mt-10">
           <img src={bgnews1} alt="bgnews" className="w-96" />
         </div>
-
+  
         <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-10">
-          {/* artikel 4 */}
-          <div className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[400px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl">
-            <figure
-              onClick={() => handleNewsDetail("automated-xray")}
-              className="cursor-pointer"
-            >
-              <img
-                src={fotoxray}
-                className="bg-cover w-96 h-[300px] translate-y-[-10px] translate-x-1"
-                alt="ai-imaging"
-              />
-            </figure>
-            <div className="card-body h-fit">
-              <h2
-                onClick={() => handleNewsDetail("automated-xray")}
-                className="cursor-pointer card-title text-lg font-poppins"
+          {news.map((item) => {
+            // Split `image_url` into an array if it contains multiple URLs
+            const imageUrls = item.image_url ? item.image_url.split(",") : [];
+  
+            return (
+              <div
+                key={item.id}
+                className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[400px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl"
               >
-                Integrating AI Imaging and LLMs to Develop Automated X-ray
-                Radiology Report System
-                <div className="badge badge-warning">NEW</div>
-              </h2>
-              <p className="line-clamp-2">
-                DREAMS (Dinus Research Group for AI in Medical Science), part of
-                IDSS, in collaboration with DINUSTEK, is developing a
-                disease-detection application focused on the chest area. The
-                application can detect various diseases such as Atelectasis,
-                Consolidation, Infiltration, Pneumothorax, and Edema using X-ray
-                images. It identifies disease-affected areas in the chest by
-                automatically providing mask annotations and generating
-                radiology diagnosis reports. The application leverages deep
-                learning and Large Language Models (LLMs) as its core
-                approaches.
-              </p>
-              <div className="card-actions justify-end mt-2">
-                <div className="badge badge-outline">September 18, 2024</div>
-                <div className="badge badge-outline">Admin IDSS</div>
+                <figure
+                  onClick={() => handleNewsDetail(item.slug)}
+                  className="cursor-pointer"
+                >
+                  {imageUrls.length > 0 ? (
+                    imageUrls.map((url, index) => (
+                      <img
+                        key={index}
+                        src={url.trim()}
+                        className="bg-cover w-96 h-[300px]"
+                        alt={`${item.title} - ${index + 1}`}
+                      />
+                    ))
+                  ) : (
+                    <p>No image available</p>
+                  )}
+                </figure>
+                <div className="card-body h-fit">
+                  <h2
+                    onClick={() => handleNewsDetail(item.slug)}
+                    className="cursor-pointer card-title text-lg font-poppins"
+                  >
+                    {item.title}
+                    {isRecent(item.published_at) && (
+                      <div className="badge badge-warning">NEW</div>
+                    )}
+                  </h2>
+                  <div
+                    className="line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                  />
+                  <div className="card-actions justify-end mt-2">
+                    <div className="badge badge-outline">
+                      {formatDate(item.published_at)}
+                    </div>
+                    <div className="badge badge-outline">{item.author}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          {/* artikel 3 */}
-          <div className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[400px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl">
-            <figure
-              onClick={() => handleNewsDetail("oncodoc-app")}
-              className="cursor-pointer"
-            >
-              <img
-                src={oncodoc}
-                className="bg-cover w-96 h-[300px]"
-                alt="healthy living"
-              />
-            </figure>
-            <div className="card-body h-fit">
-              <h2
-                onClick={() => handleNewsDetail("oncodoc-app")}
-                className="cursor-pointer card-title text-lg font-poppins"
-              >
-                Oncodoc Application and Healthy Living Habits at Nurul Istiqomah
-                Al Hira Orphanage
-                <div className="badge badge-warning">NEW</div>
-              </h2>
-              <p className="line-clamp-2">
-                Dinus Research Group for AI in Medical Science (DREAMS), part of
-                IDSS, recently conducted a community service activity at Panti
-                Asuhan Nurul Istiqomah Al Hira, located in Kelurahan Kandri,
-                Kecamatan Gunungpati, Kota Semarang, on Saturday, September 7,
-                2024. The event was attended by around 50 orphanage children and
-                led by Budi Tri Priambodo, the head of the orphanage.
-              </p>
-              <div className="card-actions justify-end mt-2">
-                <div className="badge badge-outline">September 7, 2024</div>
-                <div className="badge badge-outline">Admin IDSS</div>
-              </div>
-            </div>
-          </div>
-
-          {/* artikel 2 */}
-          <div className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[400px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl">
-            <figure
-              onClick={() => handleNewsDetail("katalis-2024")}
-              className="cursor-pointer"
-            >
-              <img
-                src={ricardus}
-                className="bg-cover w-96 h-[300px]"
-                alt="pengabdian masyarakat"
-              />
-            </figure>
-            <div className="card-body h-fit">
-              <h2
-                onClick={() => handleNewsDetail("katalis-2024")}
-                className="cursor-pointer card-title text-lg font-poppins"
-              >
-                Dr. Ricardus Receives DRTPM KATALIS Grant for Agriculture
-                Research
-              </h2>
-              <p className="line-clamp-2">
-                Dr. Ricardus Anggi Pramunendar successfully obtained funding
-                through a research grant from DRTPM under the Strategic Research
-                Collaboration or Kolaborasi Penelitian Strategis (KATALIS)
-                scheme in 2024. The research members are Prof. Dr. Pulung
-                Nurtantio Andono and Dr. Farrikh Al Zami. The KATALIS scheme is
-                research in the form of a consortium consisting of 3-4 research
-                teams from different universities.
-              </p>
-              <div className="card-actions justify-end mt-2">
-                <div className="badge badge-outline">August 25, 2024</div>
-                <div className="badge badge-outline">Admin IDSS</div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
-        <div className="mt-8 text-center">
+        <div className="mt-14 text-center">
           <button
             onClick={handleViewMore}
             className="bg-blue-900 text-white font-bold py-2 px-4 rounded-lg"
@@ -157,4 +152,5 @@ export default function LatestNews() {
       </section>
     </>
   );
+  
 }

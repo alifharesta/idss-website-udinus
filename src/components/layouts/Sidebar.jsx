@@ -42,33 +42,6 @@ export default function Sidebar() {
           <NavItem key={item.to} {...item} />
         ))}
       </nav>
-
-      <div className="mt-auto px-3 py-4">
-        <div className="flex items-center p-2 text-gray-900">
-          <img src={adminicon} className="w-7 h-7" alt="Admin" />
-          <span className="ms-3">Alif Admin</span>
-        </div>
-        <NavLink
-          className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-red-600"
-          to="/logout"
-        >
-          <svg
-            className="w-5 h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
-          <span className="ms-3">Sign Out</span>
-        </NavLink>
-      </div>
     </aside>
   );
 }

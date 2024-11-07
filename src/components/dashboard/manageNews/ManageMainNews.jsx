@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { supabase } from "../../../services/supabaseClient";  
+import { supabase } from "../../../services/supabaseClient";
+import { format } from "date-fns";
 import edit from "../../../assets/landingpage/edit.png";
 import del from "../../../assets/landingpage/delete.png";
 import Swal from "sweetalert2";
@@ -37,30 +38,23 @@ export default function ManageMainNews() {
   const deleteNews = async (id) => {
     try {
       const result = await Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       });
 
       if (result.isConfirmed) {
-        const { error } = await supabase
-          .from("news")
-          .delete()
-          .eq("id", id);
+        const { error } = await supabase.from("news").delete().eq("id", id);
 
         if (error) throw error;
 
-        setNews(news.filter(item => item.id !== id));
+        setNews(news.filter((item) => item.id !== id));
 
-        Swal.fire(
-          'Deleted!',
-          'Your news has been deleted.',
-          'success'
-        );
+        Swal.fire("Deleted!", "Your news has been deleted.", "success");
       }
     } catch (error) {
       Swal.fire({
@@ -100,25 +94,34 @@ export default function ManageMainNews() {
               )}
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                <p className="text-gray-600 mb-4">
-                  {item.content.length > 100
-                    ? `${item.content.substring(0, 100)}...`
-                    : item.content}
-                </p>
+                <p
+                  className="text-gray-600 mb-4"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      item.content.length > 100
+                        ? `${item.content.substring(0, 100)}...`
+                        : item.content,
+                  }}
+                ></p>
+
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">{item.author}</span>
                   <span className="text-sm text-gray-500">
-                    {new Date(item.created_at).toLocaleDateString()}
+                    {format(new Date(item.created_at), "dd/MM/yyyy")}
                   </span>
                 </div>
                 <div className="mt-4 flex justify-end space-x-2">
-                <Link to={`/dashboard/manage-news/edit/${item.id}`}>
-                  <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer" />
-                </Link>
-                  <img 
-                    src={del} 
-                    alt="Delete" 
-                    className="w-6 h-6 cursor-pointer" 
+                  <Link to={`/dashboard/manage-news/edit/${item.id}`}>
+                    <img
+                      src={edit}
+                      alt="Edit"
+                      className="w-6 h-6 cursor-pointer"
+                    />
+                  </Link>
+                  <img
+                    src={del}
+                    alt="Delete"
+                    className="w-6 h-6 cursor-pointer"
                     onClick={() => deleteNews(item.id)}
                   />
                 </div>

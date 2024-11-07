@@ -20,6 +20,7 @@ import ManagePublication from "../components/dashboard/managePublication/ManageM
 import AddPublication from "../components/dashboard/managePublication/AddPublication";
 import EditDeletePub from "../components/dashboard/managePublication/EditDeletePublication";
 import Login from "../pages/Login";
+// import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
 
 // User Routes
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  // {
+  //   path: "/regis",
+  //   element: <Register />,
+  // },
   {
     path: "*",
     element: <ErrorPage />,

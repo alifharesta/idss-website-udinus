@@ -1,24 +1,58 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
+import { Datepicker } from "flowbite";
+import ReactQuill from "react-quill";
 
 export default function AddNews() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [publishDate, setPublishDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [imageBlob, setImageBlob] = useState(null);
   const [errors, setErrors] = useState({});
+  const [contents, setContents] = useState("");
 
   const generateSlug = (title) => {
     const slug = title
       .toLowerCase()
-      .replace(/[^\w ]+/g, '')
-      .replace(/ +/g, '-');
+      .replace(/[^\w ]+/g, "")
+      .replace(/ +/g, "-");
     console.log("Generated slug:", slug);
     return slug;
   };
 
+  const quillRef = useRef(null);
+
+  // Text Editor
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ align: [] }],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link"],
+        ["clean"],
+      ],
+    },
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "align",
+    "list",
+    "bullet",
+    "link",
+  ];
+  // END of TextEditor
+
+  //Image
   useEffect(() => {
     return () => {
       if (imageBlob) {
@@ -26,6 +60,61 @@ export default function AddNews() {
       }
     };
   }, [imageBlob]);
+  
+  // datepicker
+  useEffect(() => {
+    const datepickerEl = document.getElementById("datepicker-autohide");
+    if (datepickerEl) {
+      const datepicker = new Datepicker(datepickerEl, {
+        format: "dd-mm-yyyy",
+        autohide: true,
+        todayHighlight: true,
+      });
+
+      datepickerEl.addEventListener("changeDate", (e) => {
+        const selectedDate = e.detail.date;
+        const formattedDate = formatDate(selectedDate); // Format date sesuai dd-mm-yyyy
+        setPublishDate(formattedDate);
+        setErrors({
+          ...errors,
+          publishDate: validatePublishDate(formattedDate),
+        });
+      });
+
+      return () => {
+        datepicker.destroy();
+      };
+    }
+  }, []);
+
+  // Format date to DD-MM-YYYY
+  const formatDate = (date) => {
+    if (!date) return "";
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  // Validate publish date
+  const validatePublishDate = (value) => {
+    if (!value) return "Tanggal publikasi harus diisi";
+    try {
+      const date = convertToISODate(value);
+      if (!date) return "Format tanggal tidak valid";
+      return "";
+    } catch (error) {
+      return "Format tanggal tidak valid";
+    }
+  };
+
+  // Convert DD-MM-YYYY to ISO format for database
+  const convertToISODate = (dateStr) => {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split("-");
+    const date = new Date(`${year}-${month}-${day}T00:00:00Z`);
+    return date.toISOString();
+  };
 
   const validateTitle = (value) => {
     if (!value.trim()) return "Judul harus diisi";
@@ -35,8 +124,10 @@ export default function AddNews() {
   };
 
   const validateContent = (value) => {
-    if (!value.trim()) return "Konten harus diisi";
-    if (value.length < 50) return "Konten minimal 50 karakter";
+    const textContent = value.replace(/<[^>]*>/g, "").trim();
+
+    if (!textContent) return "Konten harus diisi";
+    if (textContent.length < 50) return "Konten minimal 50 karakter";
     return "";
   };
 
@@ -90,14 +181,16 @@ export default function AddNews() {
     const titleError = validateTitle(title);
     const contentError = validateContent(content);
     const imageError = !image ? "Gambar harus diunggah" : "";
+    const publishDateError = validatePublishDate(publishDate);
 
     setErrors({
       title: titleError,
       content: contentError,
       image: imageError,
+      publishDate: publishDateError,
     });
 
-    if (titleError || contentError || imageError) {
+    if (titleError || contentError || imageError || publishDateError) {
       return;
     }
 
@@ -136,6 +229,11 @@ export default function AddNews() {
 
       const slug = generateSlug(title);
 
+      const isoPublishDate = convertToISODate(publishDate);
+      if (!isoPublishDate) {
+        throw new Error("Tanggal publikasi tidak valid");
+      }
+
       console.log("Inserting news data");
       const { data, error } = await supabase.from("news").insert([
         {
@@ -144,6 +242,7 @@ export default function AddNews() {
           image_url: imageUrl,
           content,
           author: "Admin IDSS",
+          published_at: isoPublishDate,
         },
       ]);
 
@@ -164,6 +263,7 @@ export default function AddNews() {
       setTitle("");
       setContent("");
       setImage(null);
+      setPublishDate("");
       handleCancelImage();
       setErrors({});
     } catch (error) {
@@ -201,6 +301,43 @@ export default function AddNews() {
         />
         {errors.title && (
           <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+        )}
+      </div>
+
+      {/* Date picker */}
+      <div>
+        <label
+          className="font-poppins text-lg block mb-2"
+          htmlFor="datepicker-autohide"
+        >
+          Tanggal Publikasi:
+        </label>
+        <div className="relative max-w-sm">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+            </svg>
+          </div>
+          <input
+            id="datepicker-autohide"
+            type="text"
+            className={`bg-gray-50 border ${
+              errors.publishDate ? "border-red-500" : "border-gray-300"
+            } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5`}
+            placeholder="Pilih tanggal"
+            value={publishDate}
+            readOnly
+            required
+          />
+        </div>
+        {errors.publishDate && (
+          <p className="text-red-500 text-sm mt-1">{errors.publishDate}</p>
         )}
       </div>
       <div>
@@ -259,17 +396,14 @@ export default function AddNews() {
         <label className="font-poppins text-lg block mb-2" htmlFor="content">
           Konten:
         </label>
-        <textarea
-          id="content"
+        <ReactQuill
+          theme="snow"
           value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-            setErrors({ ...errors, content: validateContent(e.target.value) });
-          }}
-          required
-          className={`border-2 ${
-            errors.content ? "border-red-500" : "border-gray-500"
-          } p-2 rounded-lg w-full h-40`}
+          onChange={setContent}
+          modules={modules}
+          formats={formats}
+          className="h-96 mb-12" // Tambahkan margin bottom untuk toolbar
+          placeholder="Tulis konten berita di sini..."
         />
         {errors.content && (
           <p className="text-red-500 text-sm mt-1">{errors.content}</p>

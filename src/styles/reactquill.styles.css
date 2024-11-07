@@ -1,0 +1,53 @@
+/* src/styles/quill.css */
+.ql-editor {
+    min-height: 200px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .ql-container {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .ql-snow .ql-toolbar {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: #f8f9fa;
+    border: 1px solid #d1d5db;
+  }
+  
+  .ql-snow.ql-container {
+    border: 1px solid #d1d5db;
+    border-top: 0;
+  }
+  
+  .ql-toolbar.ql-snow .ql-picker-label:hover {
+    color: #3b82f6;
+  }
+  
+  .ql-toolbar.ql-snow .ql-picker-label.ql-active {
+    color: #3b82f6;
+  }
+  
+  .ql-snow .ql-stroke {
+    stroke: #4b5563;
+  }
+  
+  .ql-snow .ql-fill {
+    fill: #4b5563;
+  }
+  
+  .ql-toolbar.ql-snow button:hover .ql-stroke {
+    stroke: #3b82f6;
+  }
+  
+  .ql-toolbar.ql-snow button:hover .ql-fill {
+    fill: #3b82f6;
+  }
+  
+  .ql-snow.ql-toolbar button:focus {
+    outline: none;
+  }

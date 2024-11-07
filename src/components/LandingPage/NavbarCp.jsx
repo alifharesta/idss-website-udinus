@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import search from "../../assets/landingpage/search.png";
 import logotext from "../../assets/landingpage/logotext.png";
+import flag1 from "../../assets/landingpage/flag1.png";
+import flag2 from "../../assets/landingpage/flag2.png";
+
 export default function index(props) {
   //Change navbar color when scroll
   const [color, setColor] = useState(false);
@@ -102,16 +104,16 @@ export default function index(props) {
           </nav>
         </div>
         <div className="hidden xl:flex items-center space-x-2 sm:space-x-3 md:space-x-4 mt-4 md:mt-0">
-          <img
-            src={search}
-            className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] md:w-[20px] md:h-[20px]"
-            alt="Search Icon"
-          />
-          <input
-            type="text"
-            placeholder="Search.."
-            className="bg-blue-900 text-center text-white font-bold p-1 sm:p-1.5 md:p-2 rounded-md text-sm sm:text-base outline-0"
-          />
+          <button>
+            <span className="mr-10 font-medium font-poppins text-md">ID</span>
+            <img src= {flag1} className="w-8 shadow-xl bg-gray-200 mr-10">
+            </img>
+          </button>
+          <button>
+          <span className="mr-10 font-medium font-poppins text-sm">EN</span>
+            <img src= {flag2} className="w-8 mr-10">
+            </img>
+          </button>
         </div>
       </header>
     </div>
