@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import adminicon from "../../assets/landingpage/adminicon.png";
 import stroke from "../../assets/landingpage/Stroke.svg";
 import Logout from "../../assets/landingpage/Logout.svg";
+import { supabase } from "../../services/supabaseClient";
 import { nameMap } from "../../pathMap";
 
 export default function NavbarAdmin() {
@@ -26,10 +27,18 @@ export default function NavbarAdmin() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("firstName");
-    localStorage.removeItem("lastName");
-    localStorage.removeItem("LastName");
-    navigate("/login");
+    localStorage.removeItem("id");
+    supabase.auth.signOut();
+    navigate("/admin-2083/login");
+
+    Swal.fire({
+      icon: "success",
+      title: "Logout Berhasil",
+      text: "Anda telah berhasil logout.",
+    }).then(() => {
+      // Arahkan ke halaman login setelah logout
+      navigate("/admin-2083/login");
+    });
   };
 
   return (
@@ -39,7 +48,7 @@ export default function NavbarAdmin() {
       <div className="navbar-end flex-none gap-10">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost">
-            <div className="avatar right- w-8 md:w-10">
+            <div className="avatar right-0 w-8 md:w-10">
               <img
                 alt="Profile Photo"
                 src={
@@ -56,10 +65,10 @@ export default function NavbarAdmin() {
 
           <ul
             tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-blue-600 rounded-sm w-52 text-white"
+            className="mt-3 z-10 shadow menu menu-sm dropdown-content hover:bg-red-600 rounded-sm w-24 text-black"
           >
             <Link>
-              <button onClick={handleLogout} className="flex gap-2">
+              <button onClick={handleLogout} className="flex gap-2 px-2">
                 <img src={Logout} alt="Logout" />
                 Logout
               </button>
