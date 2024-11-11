@@ -3,6 +3,7 @@ import adminicon from "../../assets/landingpage/adminicon.png";
 import stroke from "../../assets/landingpage/Stroke.svg";
 import Logout from "../../assets/landingpage/Logout.svg";
 import { supabase } from "../../services/supabaseClient";
+import user from "../../assets/landingpage/user.png";
 import { nameMap } from "../../pathMap";
 
 export default function NavbarAdmin() {
@@ -50,11 +51,8 @@ export default function NavbarAdmin() {
           <div tabIndex={0} role="button" className="btn btn-ghost">
             <div className="avatar right-0 w-8 md:w-10">
               <img
-                alt="Profile Photo"
-                src={
-                  adminicon ||
-                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                }
+                alt="profile"
+                src={user}
                 className="rounded-full"
               />
             </div>
@@ -65,10 +63,10 @@ export default function NavbarAdmin() {
 
           <ul
             tabIndex={0}
-            className="mt-3 z-10 shadow menu menu-sm dropdown-content hover:bg-red-600 rounded-sm w-24 text-black"
+            className="mt-3 z-10 shadow menu menu-sm dropdown-content hover:bg-red-600  rounded-lg w-24 text-black"
           >
             <Link>
-              <button onClick={handleLogout} className="flex gap-2 px-2">
+              <button onClick={handleLogout} className="flex gap-2 px-1">
                 <img src={Logout} alt="Logout" />
                 Logout
               </button>

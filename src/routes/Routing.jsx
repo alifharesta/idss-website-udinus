@@ -21,6 +21,7 @@ import AddPublication from "../components/dashboard/managePublication/AddPublica
 import EditDeletePub from "../components/dashboard/managePublication/EditDeletePublication";
 import Login from "../pages/Login";
 // import Register from "../pages/Register";
+import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
 
 // User Routes
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
   // Admin Routes
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <DashboardContent /> }, // Konten default untuk /dashboard
       { path: "manage-news", element: <ManageNews /> },
