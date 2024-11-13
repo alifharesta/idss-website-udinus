@@ -12,7 +12,6 @@ export default function AddNews() {
   const [loading, setLoading] = useState(false);
   const [imageBlob, setImageBlob] = useState(null);
   const [errors, setErrors] = useState({});
-  const [contents, setContents] = useState("");
 
   const generateSlug = (title) => {
     const slug = title
