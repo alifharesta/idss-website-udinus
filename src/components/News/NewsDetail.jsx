@@ -13,7 +13,7 @@ export default function NewsDetail() {
   const navigate = useNavigate();
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  
   const additionalArticle = {
     id: "drtpm-2024",
     slug: "drtpm-2024-grants-awarded", 

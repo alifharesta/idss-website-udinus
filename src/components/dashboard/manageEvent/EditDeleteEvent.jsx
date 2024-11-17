@@ -97,7 +97,7 @@ export default function EditEventsForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="title">
-          Judul Acara:
+          Judul Event:
         </label>
         <input
           className="border-2 border-gray-500 p-2 rounded-lg w-full"
@@ -110,7 +110,7 @@ export default function EditEventsForm() {
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="image">
-          Gambar Acara:
+          Gambar Event:
         </label>
         <input
           type="file"
@@ -134,7 +134,7 @@ export default function EditEventsForm() {
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="content">
-          Deskripsi Acara:
+          Deskripsi Event:
         </label>
         <textarea
           id="content"

@@ -4,6 +4,8 @@ import AboutUs from "../pages/AboutUs";
 import ProfilesPages from "../pages/ProfilesPages";
 import News from "../pages/News";
 import NewsDetail from "../components/News/NewsDetail";
+import Events from "../pages/Events";
+import EventsDetails from "../components/Events/EventsDetails";
 import FormPage from "../components/layouts/FormPage";
 import Dashboard from "../components/layouts/Dashboard";
 import DashboardContent from "../components/layouts/DashboardContent"; // Pastikan file ini ada
@@ -31,6 +33,8 @@ const router = createBrowserRouter([
   { path: "/profiles", element: <ProfilesPages /> },
   { path: "/news", element: <News /> },
   { path: "news/:slug", element: <NewsDetail /> },
+  { path: "/events", element: <Events /> },
+  { path: "events/:slug", element: <EventsDetails /> },
 
   // Admin Routes
   {

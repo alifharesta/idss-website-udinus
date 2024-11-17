@@ -3,6 +3,7 @@ import NavbarCp from '../components/LandingPage/NavbarCp'
 import HeroSection from '../components/LandingPage/HeroSection'
 import Footer from '../components/LandingPage/Footer'
 import LatestNews from '../components/LandingPage/LatestNews';
+import LatestEvents from "../components/LandingPage/LatestEvents";
 import arrorwup from '../assets/landingpage/arrowup.png'
 
 //button scroll
@@ -53,6 +54,7 @@ export default function LandingPage() {
     <NavbarCp />
     <HeroSection />
     <LatestNews />
+    <LatestEvents />
     <Footer />
     <ScrollToTopButton />
     </div>

@@ -341,7 +341,7 @@ export default function AddEvent() {
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="image">
-          Gambar Acara:
+          Gambar Event:
         </label>
         <input
           type="file"
@@ -393,7 +393,7 @@ export default function AddEvent() {
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="content">
-          Deskripsi Acara:
+          Deskripsi Event:
         </label>
         <ReactQuill
           theme="snow"
