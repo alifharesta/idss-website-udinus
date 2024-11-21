@@ -13,34 +13,8 @@ export default function EventsDetails() {
   const [events, setEvents] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Format date with null check
-  const formatDate = (dateString) => {
-    if (!dateString) return "No date";
-    try {
-      return format(parseISO(dateString), "dd MMMM yyyy", { locale: id });
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return "Invalid date";
-    }
-  };
-
-  // Check if date is recent (within 7 days) with null check
-  const isRecent = (dateString) => {
-    if (!dateString) return false;
-    try {
-      const date = parseISO(dateString);
-      return date >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    } catch (error) {
-      console.error("Error checking date:", error);
-      return false;
-    }
-  };
-
   useEffect(() => {
     if (slug) {
-      setEvents(null);
-      setLoading(false);
-    } else {
       fetchEventsDetails();
     }
   }, [slug]);
@@ -76,9 +50,31 @@ export default function EventsDetails() {
       setLoading(false);
     }
   }
+  // Format date with null check
+  const formatDate = (dateString) => {
+    if (!dateString) return "No date";
+    try {
+      return format(parseISO(dateString), "dd MMMM yyyy", { locale: id });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Invalid date";
+    }
+  };
+
+  // Check if date is recent (within 7 days) with null check
+  const isRecent = (dateString) => {
+    if (!dateString) return false;
+    try {
+      const date = parseISO(dateString);
+      return date >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    } catch (error) {
+      console.error("Error checking date:", error);
+      return false;
+    }
+  };
 
   const handleClickBack = () => {
-    navigate("/events");
+    navigate("/");
   };
 
   if (loading) {
@@ -111,8 +107,19 @@ export default function EventsDetails() {
   }
 
   if (!events) {
-    return <div>Events not found</div>;
+    return (
+      <div className="text-center mt-20">
+        <h1 className="text-xl font-bold">Event not found</h1>
+        <button
+          onClick={handleClickBack}
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
+        >
+          Back to Home
+        </button>
+      </div>
+    );
   }
+  
 
   return (
     <>
@@ -123,7 +130,7 @@ export default function EventsDetails() {
           className="inline-flex items-center bg-yellow-500 text-black font-bold font-poppins mb-10 py-2 px-4 rounded-md hover:bg-yellow-600"
         >
           <img src={arrow} alt="arrow" className="w-6 mr-2 scale-x-[-1]" />
-          <span className="hidden sm:inline">Back to Events</span>
+          <span className="hidden sm:inline">Back to Home</span>
         </button>
         <h1 className="text-4xl font-poppins font-bold">{events.title}</h1>
         <img
@@ -132,15 +139,13 @@ export default function EventsDetails() {
           className="w-[500px] mt-10 rounded-lg"
         />
         <div className="mt-5 text-sm text-gray-600">
-          <span>
-            {formatDate(events.published_at)}
-          </span>
+          <span>{formatDate(events.published_at)}</span>
           <span className="font-bold ml-2">|</span>
           <span className="ml-2">{events.author}</span>
         </div>
         <div
           className="mt-10 text-xl font-poppins leading-loose text-justify"
-          dangerouslySetInnerHTML={{ __html: news.content }}
+          dangerouslySetInnerHTML={{ __html: events.content }}
         />
       </section>
     </>
