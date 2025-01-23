@@ -16,6 +16,7 @@
     "@mui/material": "^6.1.1",
     "@supabase/supabase-js": "^2.45.3",
     "@tailwindcss/typography": "^0.5.15",
+    "caniuse-lite": "^1.0.30001695",
     "date-fns": "^4.1.0",
     "flowbite": "^2.5.1",
     "quill-better-table": "^1.2.10",

@@ -126,7 +126,7 @@ export default function AddNews() {
     const textContent = value.replace(/<[^>]*>/g, "").trim();
 
     if (!textContent) return "Konten harus diisi";
-    if (textContent.length < 50) return "Konten minimal 50 karakter";
+    if (textContent.length < 10) return "Konten minimal 10 karakter";
     return "";
   };
 
@@ -241,7 +241,7 @@ export default function AddNews() {
           image_url: imageUrl,
           content,
           author: "Admin IDSS",
-          published_at: isoPublishDate,
+          published_at: isoPublishDate, 
         },
       ]);
 
@@ -258,7 +258,7 @@ export default function AddNews() {
         text: "Berita berhasil ditambahkan.",
         confirmButtonColor: "#3085d6",
       });
-
+ 
       setTitle("");
       setContent("");
       setImage(null);

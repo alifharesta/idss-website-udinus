@@ -8,7 +8,7 @@ import Events from "../pages/Events";
 import EventsDetails from "../components/Events/EventsDetails";
 import FormPage from "../components/layouts/FormPage";
 import Dashboard from "../components/layouts/Dashboard";
-import DashboardContent from "../components/layouts/DashboardContent"; // Pastikan file ini ada
+import DashboardContent from "../components/layouts/DashboardContent";
 import ManageEvent from "../components/dashboard/manageEvent/ManageMainEvent";
 import AddEvent from "../components/dashboard/manageEvent/AddEvent";
 import EditDeleteEvent from "../components/dashboard/manageEvent/EditDeleteEvent";
@@ -22,6 +22,8 @@ import ManagePublication from "../components/dashboard/managePublication/ManageM
 import AddPublication from "../components/dashboard/managePublication/AddPublication";
 import EditDeletePub from "../components/dashboard/managePublication/EditDeletePublication";
 import Login from "../pages/Login";
+import ArchiveEvents from "../pages/ArchiveEvents";
+import ArchiveNews from "../pages/ArchiveNews";
 // import Register from "../pages/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
@@ -45,11 +47,21 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { index: true, element: <DashboardContent /> }, // Konten default untuk /dashboard
+      { index: true, element: <DashboardContent /> }, 
       { path: "manage-news", element: <ManageNews /> },
       { path: "manage-events", element: <ManageEvent /> },
       { path: "manage-publications", element: <ManagePublication /> },
       { path: "manage-members", element: <ManageMember /> },
+      {
+        path: "/dashboard/archive-events",
+        element: <FormPage />,
+        children: [{ index: true, element: <ArchiveEvents /> }],
+      },
+      {
+        path: "/dashboard/archive-news",
+        element: <FormPage />,
+        children: [{ index: true, element: <ArchiveNews /> }],
+      },
       {
         path: "manage-news/add",
         element: <FormPage />,

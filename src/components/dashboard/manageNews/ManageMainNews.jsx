@@ -20,6 +20,7 @@ export default function ManageMainNews() {
       const { data, error } = await supabase
         .from("news")
         .select("*")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -48,11 +49,18 @@ export default function ManageMainNews() {
       });
 
       if (result.isConfirmed) {
-        const { error } = await supabase.from("news").delete().eq("id", id);
+        const { error } = await supabase
+          .from("news")
+          .update({
+            deleted_at: new Date().toISOString(),
+          })
+          .eq("id", id);
 
         if (error) throw error;
 
         setNews(news.filter((item) => item.id !== id));
+
+        fetchNews();
 
         Swal.fire("Deleted!", "Your news has been deleted.", "success");
       }

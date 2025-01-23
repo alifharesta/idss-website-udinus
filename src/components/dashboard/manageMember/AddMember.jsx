@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { gl } from "date-fns/locale";
 
 export default function AddNews() {
+  const [gelar, setGelar] = useState(""); 
   const [nama, setNama] = useState("");
   const [bidang, setBidang] = useState("");
   const [jabatan, setJabatan] = useState("");
@@ -21,6 +24,11 @@ export default function AddNews() {
       }
     };
   }, [imageBlob]);
+
+  const validateGelar = (value) => {
+    if (!value.trim()) return "Gelar harus diisi";
+    return "";
+  };
   
   const validateNama = (value) => {
     if (!value.trim()) return "Nama harus diisi";
@@ -84,19 +92,21 @@ export default function AddNews() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const gelarError = validateGelar(gelar);
     const namaError = validateNama(nama);
     const bidangError = validateBidang(bidang);
     const jabatanError = validateJabatan(jabatan);
     const imageError = !image ? "Gambar harus diunggah" : "";
 
     setErrors({
+      gelar: gelarError,
       nama: namaError,
       bidang: bidangError,
       jabatan: jabatanError,
       image: imageError,
     });
 
-    if (namaError || bidangError || jabatanError || imageError) {
+    if (gelarError || namaError || bidangError || jabatanError || imageError) {
       return;
     }
 
@@ -137,6 +147,7 @@ export default function AddNews() {
       
       const { data, error } = await supabase.from("members").insert([
         {
+          gelar,
           nama,
           bidang,
           jabatan,
@@ -158,6 +169,7 @@ export default function AddNews() {
         confirmButtonColor: "#3085d6",
       });
 
+      setGelar("");
       setNama("");
       setBidang("");
       setJabatan("");
@@ -180,6 +192,27 @@ export default function AddNews() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="gelar">
+          Gelar:
+        </label>
+        <input
+          className={`border-2 ${
+            errors.title ? "border-red-500" : "border-gray-500"
+          } p-2 rounded-lg w-full`}
+          type="text"
+          id="gelar"
+          value={gelar}
+          onChange={(e) => {
+            setGelar(e.target.value);
+            setErrors({ ...errors, title: validateGelar(e.target.value) });
+          }}
+          required
+        />
+        {errors.gelar && (
+          <p className="text-red-500 text-sm mt-1">{errors.gelar}</p>
+        )}
+      </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="bidang">
           Nama:
@@ -307,6 +340,11 @@ export default function AddNews() {
         }`}
       >
         {loading ? "Menambahkan..." : "Add Member"}
+      </button>
+      <button>
+        <Link to="/dashboard/manage-members" className="mt-4 ml-5 px-4 py-2 font-bold bg-red-500 text-white rounded-full">
+          Back
+        </Link>
       </button>
     </form>
   );

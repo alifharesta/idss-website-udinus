@@ -80,7 +80,8 @@ export default function ManageMainMember() {
         <table className="table">
           <thead className="mx-auto text-center text-neutral-15 border-none">
             <tr className="border-none w-[999px] h-[56px] pt-[16px] pr-[0px] pb-[16px] pl-[0px] gap-[56px]">
-              <th>Image</th>
+              <th>Profile</th>
+              <th>Gelar</th>
               <th>Nama</th>
               <th>Bidang</th>
               <th>Jabatan</th>
@@ -105,6 +106,7 @@ export default function ManageMainMember() {
                     <div className="w-20 h-20 bg-gray-200 rounded-full" />
                   )}
                 </td>
+                <td>{item.gelar}</td>
                 <td>{item.nama}</td>
                 <td>{item.bidang}</td>
                 <td>{item.jabatan}</td>

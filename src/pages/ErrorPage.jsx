@@ -9,7 +9,7 @@ export default function Error () {
                 <h1 className="text-red-800 lg:text-[44px] font-bold lg:leading-[58px]">404 ERROR</h1>
                 <p className="text-black lg:text-4xl lg:leading-[46px]">Sorry, page not found.</p>
             </div>
-            <Link className="btn btn-form-secondary btn-color-primary text-xs mt-[46px]" to="/dashboard" end>Back to Home</Link>
+            <Link className="btn btn-form-secondary btn-color-primary text-xs mt-[46px]" to="/" end>Back to Home</Link>
         </div>
     )
 }

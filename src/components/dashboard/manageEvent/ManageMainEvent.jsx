@@ -20,6 +20,7 @@ export default function ManageMainEvent() {
       const { data, error } = await supabase
         .from("events")
         .select("*")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -47,11 +48,14 @@ export default function ManageMainEvent() {
       });
 
       if (result.isConfirmed) {
-        const { error } = await supabase.from("events").delete().eq("id", id);
+        const { data, error } = await supabase
+          .from("events")
+          .update({
+            deleted_at: new Date().toISOString(),
+          })
+          .eq("id", id);
 
-        if (error) throw error;
-
-        setEvents(events.filter((item) => item.id !== id));
+        fetchEvents();
 
         Swal.fire("Deleted!", "Your events has been deleted.", "success");
       }

@@ -15,7 +15,7 @@ export default function AddEvent() {
 
   const generateSlug = (title) => {
     const slug = title
-      .toLowerCase()
+      .toLowerCase() 
       .replace(/[^\w ]+/g, "")
       .replace(/ +/g, "-");
     console.log("Generated slug:", slug);

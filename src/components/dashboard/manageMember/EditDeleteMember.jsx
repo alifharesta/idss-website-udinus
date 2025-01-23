@@ -4,6 +4,7 @@ import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
 
 export default function EditNewsForm() {
+  const [gelar, setGelar] = useState("");
   const [nama, setNama] = useState("");
   const [bidang, setBidang] = useState("");
   const [jabatan, setJabatan] = useState("");
@@ -29,6 +30,7 @@ export default function EditNewsForm() {
 
       if (error) throw error;
 
+      setGelar(data.gelar);
       setNama(data.nama);
       setBidang(data.bidang);
       setJabatan(data.jabatan);
@@ -71,6 +73,7 @@ export default function EditNewsForm() {
       const { data, error } = await supabase
         .from("members")
         .update({
+          gelar,
           nama,
           bidang,
           jabatan,
@@ -95,6 +98,19 @@ export default function EditNewsForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="gelar">
+          Gelar:
+        </label>
+        <input
+          className="border-2 border-gray-500 p-2 rounded-lg w-full"
+          type="text"
+          id="gelar"
+          value={gelar}
+          onChange={(e) => setGelar(e.target.value)}
+          required
+        />
+      </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="nama">
           Nama:
