@@ -261,7 +261,7 @@ export default function NewsDetail() {
       <section className="container mx-auto py-10 px-5 sm:px-10 lg:px-24 mt-32">
         <button
           onClick={handleClickBack}
-          className="inline-flex items-center bg-yellow-500 text-black font-bold font-poppins mb-10 py-2 px-4 rounded-md hover:bg-yellow-600"
+          className="inline-flex items-center bg-blue-400 hover:bg-blue-700 transition duration-1000 text-black font-bold font-poppins mb-10 py-2 px-4 rounded-md"
         >
           <img src={arrow} alt="arrow" className="w-6 mr-2 scale-x-[-1]" />
           <span className="hidden sm:inline">Back to News</span>

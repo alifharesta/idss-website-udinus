@@ -22,6 +22,7 @@ export default function LatestNews() {
       const { data, error } = await supabase
         .from("news")
         .select("*")
+        .is("deleted_at", null)
         .order("published_at", { ascending: false })
         .limit(3); //Show 3 latest news
 
@@ -141,7 +142,7 @@ export default function LatestNews() {
             );
           })}
         </div>
-        <div className="mt-14 text-center">
+        <div className="mt-12 text-center">
           <button
             onClick={handleViewMore}
             className="bg-blue-900 text-white font-bold py-2 px-4 rounded-lg"

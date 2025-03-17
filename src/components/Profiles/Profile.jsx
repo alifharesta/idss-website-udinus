@@ -97,21 +97,21 @@ export default function Profile() {
   ];
   const navigate = useNavigate();
 
-  const handleClickBack = () => {
-    navigate("/");
-  };
+  // const handleClickBack = () => {
+  //   navigate("/");
+  // };
 
   return (
     <>
       <NavbarCp />
-      <section className="container mx-auto px-6 py-6 mt-24">
-        <button
+      <section className="container mx-auto py-4 px-8 mt-24">
+        {/* <button
           onClick={handleClickBack} // Event handler untuk navigasi
           className="inline-flex items-center bg-yellow-500 text-black font-bold font-poppins mb-16 py-2 px-4 rounded-md hover:bg-yellow-600"
         >
           <img src={arrow} alt="arrow" className="w-6 mr-2 scale-x-[-1]" />
           <span className="hidden sm:inline">Back to Homepage</span>
-        </button>
+        </button> */}
         <h1 className="text-4xl font-poppins font-bold mb-8">Commitee</h1>
         <ul className="space-y-6">
           {commitee.map((person, index) => (

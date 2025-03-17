@@ -5,25 +5,12 @@ import Footer from "./Footer";
 export default function About() {
   const navigate = useNavigate();
 
-  const handleClickBack = () => {
-    navigate("/"); // Navigasi ke halaman utama
-  };
 
   return (
     <section className="container mx-auto py-4 px-8 mt-24">
       <main className="container mx-auto px-4 mt-8">
         <div className="container mt-10">
-          <button
-            onClick={handleClickBack}
-            className="relative inline-flex items-center bg-yellow-500 text-black text-xs font-bold font-poppins py-2 px-4 rounded-md hover:bg-yellow-600"
-          >
-            <img
-              src={arrow}
-              alt="arrow"
-              className="w-5 mr-2 scale-x-[-1]"
-            />
-            <span className="hidden sm:inline">Back to Homepage</span>
-          </button>
+         
           <h1 className="text-5xl text-black font-medium mb-8 mt-4">About Us</h1>
         </div>
 

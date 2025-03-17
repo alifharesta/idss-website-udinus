@@ -279,6 +279,17 @@ export default function AddEvent() {
     }
   };
 
+  const isValidForm = () => {
+    const titleError = validateTitle(title);
+    const contentError = validateContent(content);
+    const imageError = !image ? "Gambar harus diunggah" : "";
+    const publishDateError = validatePublishDate(publishDate);
+
+    if (titleError || contentError || imageError || publishDateError) return false
+
+    return true;
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
@@ -411,15 +422,15 @@ export default function AddEvent() {
       <button
         type="submit"
         disabled={
-          loading || Object.values(errors).some((error) => error !== "")
+          loading || !isValidForm()
         }
         className={`mt-4 px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline ${
-          loading || Object.values(errors).some((error) => error !== "")
+          loading || !isValidForm()
             ? "opacity-50 cursor-not-allowed"
             : ""
         }`}
       >
-        {loading ? "Menambahkan..." : "Tambah Berita"}
+        {loading ? "Menambahkan..." : "Tambah Events"}
       </button>
     </form>
   );

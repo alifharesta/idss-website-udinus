@@ -4,28 +4,26 @@ import { supabase } from "../../services/supabaseClient";
 import NavbarCp from "../LandingPage/NavbarCp";
 import arrow from "../../assets/landingpage/arrow.png";
 import Swal from "sweetalert2";
-import { format, parseISO } from "date-fns";
-import { id } from "date-fns/locale";
 
-export default function EventsDetails() {
+export default function PublicationDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [events, setEvents] = useState(null);
+  const [publication, setPublication] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (slug) {
-      fetchEventsDetails();
+      fetchPublication();
     }
   }, [slug]);
 
-  async function fetchEventsDetails() {
+  async function fetchPublication() {
     try {
       setLoading(true);
-      console.log("Fetching events with slug:", slug);
+      console.log("Fetching publication with slug:", slug);
 
       const { data, error } = await supabase
-        .from("events")
+        .from("publications")
         .select("*")
         .eq("slug", slug)
         .maybeSingle();
@@ -33,48 +31,26 @@ export default function EventsDetails() {
       if (error) throw error;
 
       if (!data) {
-        console.log("No events found with this slug", slug);
-        setEvents(null);
+        console.log("No publication found with this slug", slug);
+        setPublication(null);
       } else {
-        console.log("Fetched events:", data);
-        setEvents(data);
+        console.log("Fetched publication:", data);
+        setPublication(data);
       }
     } catch (error) {
-      console.error("Error fetching events detail:", error);
+      console.error("Error fetching publication detail:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Error fetching events detail: " + error.message,
+        text: "Error fetching publication detail: " + error.message,
       });
     } finally {
       setLoading(false);
     }
   }
-  // Format date with null check
-  const formatDate = (dateString) => {
-    if (!dateString) return "No date";
-    try {
-      return format(parseISO(dateString), "dd MMMM yyyy", { locale: id });
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return "Invalid date";
-    }
-  };
-
-  // Check if date is recent (within 7 days) with null check
-  const isRecent = (dateString) => {
-    if (!dateString) return false;
-    try {
-      const date = parseISO(dateString);
-      return date >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    } catch (error) {
-      console.error("Error checking date:", error);
-      return false;
-    }
-  };
 
   const handleClickBack = () => {
-    navigate("/");
+    navigate("/publications");
   };
 
   if (loading) {
@@ -106,10 +82,10 @@ export default function EventsDetails() {
     );
   }
 
-  if (!events) {
+  if (!publication) {
     return (
       <div className="text-center mt-20">
-        <h1 className="text-xl font-bold">Event not found</h1>
+        <h1 className="text-xl font-bold">Publication not found</h1>
         <button
           onClick={handleClickBack}
           className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
@@ -127,26 +103,21 @@ export default function EventsDetails() {
       <section className="container mx-auto py-10 px-5 sm:px-10 lg:px-24 mt-32">
         <button
           onClick={handleClickBack}
-          className="inline-flex items-center bg-blue-400  text-black font-bold font-poppins mb-10 py-2 px-4 rounded-md"
+          className="inline-flex items-center bg-yellow-500 text-black font-bold font-poppins mb-10 py-2 px-4 rounded-md hover:bg-yellow-600"
         >
           <img src={arrow} alt="arrow" className="w-6 mr-2 scale-x-[-1]" />
           <span className="hidden sm:inline">Back to Home</span>
         </button>
-        <h1 className="text-4xl font-poppins font-bold">{events.title}</h1>
-        <img
-          src={events.image_url}
-          alt={events.title}
-          className="w-[500px] mt-10 rounded-lg"
-        />
-        <div className="mt-5 text-sm text-gray-600">
-          <span>{formatDate(events.published_at)}</span>
+        <h1 className="text-4xl font-poppins font-bold">{publication.judul}</h1>
+        <div className="mt-5 text-sm text-gray-600 mb-3">
+          <span>{publication.tahun}</span>
           <span className="font-bold ml-2">|</span>
-          <span className="ml-2">{events.author}</span>
+          <span className="ml-2">{publication.author}</span>
+          <span className="font-bold ml-2">|</span>
+          <span className="ml-2">{publication.volume}</span>
         </div>
-        <div
-          className="mt-10 text-xl font-poppins leading-loose text-justify"
-          dangerouslySetInnerHTML={{ __html: events.content }}
-        />
+        <h3 className="text-m font-poppins ">{publication.abstract}</h3>
+        
       </section>
     </>
   );

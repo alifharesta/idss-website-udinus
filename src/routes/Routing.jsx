@@ -27,6 +27,8 @@ import ArchiveNews from "../pages/ArchiveNews";
 // import Register from "../pages/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
+import Publication from "../pages/Publication";
+import PublicationDetails from "../components/Publication/PublicationDetails";
 
 // User Routes
 const router = createBrowserRouter([
@@ -37,6 +39,9 @@ const router = createBrowserRouter([
   { path: "news/:slug", element: <NewsDetail /> },
   { path: "/events", element: <Events /> },
   { path: "events/:slug", element: <EventsDetails /> },
+  { path: "/publications", element: <Publication /> },
+  { path: "publications/:slug", element: <PublicationDetails /> },
+
 
   // Admin Routes
   {

@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import { id } from "date-fns/locale";
 import Swal from "sweetalert2";
+import SearchInput from "../search/SearchInput";
 
 // Format date with null check
 const formatDate = (dateString) => {
@@ -77,26 +78,41 @@ export default function AllNews() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage1, setCurrentPage1] = useState(1);
   const pageSize = 6;
 
-  useEffect(() => {
-    fetchNews();
-  }, [currentPage]);
+  const [search, setSearch] = useState("");
+  const handleSearch = (news) => {
+    setSearch(news.target.value);
+  };
 
   async function fetchNews() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      let query = supabase
         .from("news")
         .select("*")
         .order("created_at", { ascending: false })
-        .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+        .is("deleted_at", null);
+
+      // Add search filter if search term exists
+      if (search) {
+        query = query.or(
+          `title.ilike.%${search}%, content.ilike.%${search}%, author.ilike.%${search}%`
+        );
+      }
+
+      const startIndex = (currentPage - 1) * ([1, 2].includes(currentPage) ? 5 : pageSize);
+      const endIndex = currentPage * ([1, 2].includes(currentPage) ? 5 : pageSize) - 1;
+
+      // Pagination Logic 
+      const { data, error } = await query.range(startIndex, endIndex);
 
       if (error) throw error;
 
-      const additionalArticle = {
+      let additionalArticle = {
         id: "drtpm-2024",
-        slug: "drtpm-2024-grants-awarded", 
+        slug: "drtpm-2024-grants-awarded",
         title:
           "DRTPM 2024 Grants Awarded to 19 Research Projects at IDSS, Exploring AI, Data Security, and HPC",
         content: `
@@ -233,7 +249,15 @@ export default function AllNews() {
         published_at: new Date().toISOString(),
         author: "IDSS",
       };
-      setNews([additionalArticle, ...data]);
+      if (
+        currentPage === 1 &&
+        (!search || (additionalArticle.title.toLowerCase().includes(search) || additionalArticle.content.toLowerCase().includes(search)))
+      ) {
+        setNews([additionalArticle, ...data]);
+        return;
+      }
+
+      setNews([...data]);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -247,6 +271,7 @@ export default function AllNews() {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+    setCurrentPage1(newPage);
   };
 
   const handleNewsDetail = (slug) => {
@@ -255,12 +280,24 @@ export default function AllNews() {
     }
   };
 
+  useEffect(() => {
+    fetchNews();
+  }, [currentPage, search]);
+
   return (
     <>
       <section className="mx-auto px-0 mb-24">
+
         <div className="mt-28 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
           All News
         </div>
+        
+        <SearchInput
+          title="Search News..."
+          placeholder="Search News..."
+          value={search}
+          onChange={handleSearch}
+        />
 
         <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-10">
           {loading ? (

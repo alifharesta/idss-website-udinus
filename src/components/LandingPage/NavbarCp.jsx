@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import logotext from "../../assets/landingpage/logotext.png";
-import flag1 from "../../assets/landingpage/flag1.png";
-import flag2 from "../../assets/landingpage/flag2.png";
+
 
 export default function index(props) {
 
-  const {t, i18n} = useTranslation();
-  const [selectLang, setSelectLang] = useState("id");
+  // const {t, i18n} = useTranslation();
+  // const [selectLang, setSelectLang] = useState("id");
 
-  const handleLanguange = (lang) => {
-    setSelectLang(lang);
-    i18n.changeLanguage(lang);
-  }
+  // const handleLanguange = (lang) => {
+  //   setSelectLang(lang);
+  //   i18n.changeLanguage(lang);
+  // }
+
   //Change navbar color when scroll
   const [color, setColor] = useState(false);
   const changeColor = () => {
@@ -38,7 +37,7 @@ export default function index(props) {
       <header className="container m-auto font-roboto flex flex-wrap items-center justify-between px-2">
         <div className="flex  items-center justify-between w-full xl:w-auto">
           <a href="\" className="">
-            <img src={logotext} alt="" className="!w-[350px]" />
+            <img src={logotext} alt="" className="!w-[350px] ml-10" />
           </a>
           <button
             id="hamburger"
@@ -80,14 +79,14 @@ export default function index(props) {
             color ? "bg-white" : ""
           } w-full px-6 xl:visible xl:bg-transparent justify-center items-center  transition duration-300 ease-in-out xl:block xl:w-auto`}
         >
-          <nav className=" w-full px-6  tracking-wide transition lg:w-auto  mr-7 lg:block">
-            <ul className="text-[18px] flex flex-col  xl:flex-row items-center justify-around gap-[60px]">
+          <nav className="tracking-wide transition lg:w-auto lg:block">
+            <ul className="text-[18px] mr-72 flex flex-col  xl:flex-row items-center justify-around gap-[60px]">
               <li>
-                <a
+                <a  
                   href="/"
                   className="group transition duration-300 hover:text-[#2196F3]"
                 >
-                  {t("navbar.homepage")}
+                  Homepage
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
                 </a>
               </li>
@@ -96,7 +95,7 @@ export default function index(props) {
                   href="/profiles"
                   className="group transition duration-300 hover:text-[#2196F3]"
                 >
-                  {t("navbar.profiles")}
+                  Profiles
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
                 </a>
               </li>
@@ -105,48 +104,30 @@ export default function index(props) {
                   to="/news"
                   className="group transition duration-300 hover:text-[#2196F3]"
                 >
-                  {t("navbar.news")}
+                  News
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/news"
+                  to="/events"
                   className="group transition duration-300 hover:text-[#2196F3]"
                 >
-                  {t("navbar.events")}
+                  Events
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/publications"
+                  className="group transition duration-300 hover:text-[#2196F3]"
+                >
+                  Publications
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
                 </Link>
               </li>
             </ul>
           </nav>
-        </div>
-        <div className="hidden xl:flex items-center space-x-2 sm:space-x-3 md:space-x-4 mt-4 md:mt-0">
-          {/* Button Bahasa Indonesia */}
-      <button
-        onClick={() => handleLanguange("id")}
-        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition duration-300 ${
-          selectLang === "id"
-            ? "bg-blue-500 text-white shadow-lg"
-            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-        }`}
-      >
-        <span className="font-medium font-poppins text-md">ID</span>
-        <img src={flag1} alt="ID Flag" className="w-8" />
-      </button>
-
-      {/* Button Bahasa Inggris */}
-      <button
-        onClick={() => handleLanguange("en")}
-        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition duration-300 ${
-          selectLang === "en"
-            ? "bg-blue-500 text-white shadow-lg"
-            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-        }`}
-      >
-        <span className="font-medium font-poppins text-md">EN</span>
-        <img src={flag2} alt="EN Flag" className="w-8" />
-      </button>
         </div>
       </header>
     </div>

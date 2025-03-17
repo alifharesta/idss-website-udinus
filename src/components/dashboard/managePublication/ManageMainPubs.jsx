@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../../../services/supabaseClient";
-import { format } from "date-fns";
 import edit from "../../../assets/landingpage/edit.png";
 import del from "../../../assets/landingpage/delete.png";
 import Swal from "sweetalert2";
@@ -20,7 +19,6 @@ export default function ManageMainPubs() {
       const { data, error } = await supabase
         .from("publications")
         .select("*")
-        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setPublication(data);
@@ -42,8 +40,8 @@ export default function ManageMainPubs() {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
         confirmButtonText: "Yes, delete it!",
       });
 
@@ -78,7 +76,7 @@ export default function ManageMainPubs() {
     <>
       <div className="mx-auto mb-4">
         <Link to="add" className="p-2 bg-blue-500 text-white rounded-md">
-          Add Article
+          Add Publications
         </Link>
       </div>
 
@@ -91,23 +89,64 @@ export default function ManageMainPubs() {
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+                <h2 className="text-xl font-semibold mb-2">{item.judul}</h2>
                 <p
                   className="text-gray-600 mb-4"
                   dangerouslySetInnerHTML={{
                     __html:
-                      item.content.length > 100
+                      item.content?.length > 100
                         ? `${item.content.substring(0, 100)}...`
                         : item.content,
                   }}
                 ></p>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">{item.author}</span>
-                  <span className="text-sm text-gray-500">
-                    {format(new Date(item.created_at), "dd/MM/yyyy")}
-                  </span>
+
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-black font-bold">{item.author}</span>
                 </div>
+
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">
+                      Publication Type:
+                    </span>
+                    <span className="text-sm text-gray-600">
+                      {item.jenis}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">
+                      Volume:
+                    </span>
+                    <span className="text-sm text-gray-600">{item.volume}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">
+                      Issue:
+                    </span>
+                    <span className="text-sm text-gray-600">{item.issue}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">
+                      Year:
+                    </span>
+                    <span className="text-sm text-gray-600">{item.tahun}</span>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-gray-700">
+                    Article URL:
+                  </span>
+                  <a
+                    href={item.url_artikel}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:text-blue-800 break-all"
+                  >
+                    {item.url_artikel}
+                  </a>
+                </div>
+
                 <div className="mt-4 flex justify-end space-x-2">
                   <Link to={`/dashboard/manage-publications/edit/${item.id}`}>
                     <img
