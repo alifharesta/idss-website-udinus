@@ -141,13 +141,14 @@ export default function AllEvents() {
   return (
     <>
       <section className="mx-auto px-0 mb-24">
-        <div className="mt-28 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
+        <div className="mt-28 text-4xl font-bold px-10 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
           All Events
         </div>
 
         <SearchInput
           title="Search Events..."
           placeholder="Search Events..."
+          className="w-[350px] sm:w-[200px] md:w-[500px] lg:w-72 xl:w-96"
           value={search}
           onChange={handleSearch}
         />

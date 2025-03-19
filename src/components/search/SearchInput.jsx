@@ -1,9 +1,9 @@
 
 
 export default function SearchInput(props) {
-  const {title, placeholder, value, onChange} = props;
+  const {title, placeholder, value, onChange, className} = props;
   return (
-    <form className="max-w-md mx-auto mt-6">
+    <form className={`max-w-md mx-auto mt-6 ${className}`}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

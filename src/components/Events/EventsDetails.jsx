@@ -28,7 +28,7 @@ export default function EventsDetails() {
         .from("events")
         .select("*")
         .eq("slug", slug)
-        .maybeSingle();
+        // .maybeSingle();
 
       if (error) throw error;
 
@@ -37,7 +37,7 @@ export default function EventsDetails() {
         setEvents(null);
       } else {
         console.log("Fetched events:", data);
-        setEvents(data);
+        setEvents(Array.isArray(data) && data.length > 0 ? data[0] : data);
       }
     } catch (error) {
       console.error("Error fetching events detail:", error);

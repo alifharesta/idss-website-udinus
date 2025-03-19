@@ -27,21 +27,22 @@ export default function index(props) {
   const [isNavExpanded, setIsNavExpanded] = useState(true);
 
   return (
+
     <div
-      className={`fixed top-0 w-full z-50 transition duration-700 ease-in-out  ${
+      className={`fixed top-0 w-full z-50 transition duration-700 ease-in-out ${
         color
           ? "bg-white pt-[12px]"
           : "pt-[12px] lg:pt-[20px] bg-white lg:bg-transparent"
       } ${props.fix ? "lg:bg-white !pt-[12px]" : ""}`}
     >
       <header className="container m-auto font-roboto flex flex-wrap items-center justify-between px-2">
-        <div className="flex  items-center justify-between w-full xl:w-auto">
+        <div className="flex items-center justify-between w-full xl:w-auto">
           <a href="\" className="">
-            <img src={logotext} alt="" className="!w-[350px] ml-10" />
+            <img src={logotext} alt="" className="!w-[250px] md:!w-[350px] ml-4 md:ml-10" />
           </a>
           <button
             id="hamburger"
-            className="relative w-10 h-10 xl:hidden overflow-hidden"
+            className="relative w-10 h-10 xl:hidden overflow-hidden mr-4"
             onClick={() => {
               setIsNavExpanded(!isNavExpanded);
             }}
@@ -49,15 +50,15 @@ export default function index(props) {
             <div
               role="hidden"
               id="line"
-              className={` ${
+              className={`${
                 isNavExpanded ? "" : "-rotate-45 translate-y-2"
               } inset-0 w-6 h-0.5 m-auto rounded-full bg-gray-500 transition duration-300`}
             ></div>
             <div
               role="hidden"
               id="line2"
-              className={` ${
-                isNavExpanded ? "visible translate-x-0" : "translate-x-10"
+              className={`${
+                isNavExpanded ? "visible" : "opacity-0"
               } inset-0 w-6 h-0.5 mt-1.5 m-auto rounded-full bg-gray-500 transition duration-300`}
             ></div>
             <div
@@ -69,62 +70,97 @@ export default function index(props) {
             ></div>
           </button>
         </div>
+    
+        {/* Mobile Navigation Overlay */}
+        {!isNavExpanded && (
+          <div onClick={() => setIsNavExpanded(!isNavExpanded)} className="fixed top-0 right-0 h-screen w-screen bg-black/40 z-[10]"></div>
+        )}
         <div
           id="navlinks"
-          className={`relative  bg-white xl:bg-transparent font-bold font-poppins ${
-            isNavExpanded
-              ? "hidden -translate-y-[120%] lg:-translate-y-0"
-              : "visible translate-y-2 rounded-lg p-5"
-          } ${
-            color ? "bg-white" : ""
-          } w-full px-6 xl:visible xl:bg-transparent justify-center items-center  transition duration-300 ease-in-out xl:block xl:w-auto`}
+          className={`z-50 fixed top-0 right-0 h-screen w-[300px] bg-[#03103d] shadow-2xl xl:hidden transform transition-transform duration-300 ease-in-out ${
+            isNavExpanded ? "translate-x-full" : "translate-x-0"
+          }`}
         >
-          <nav className="tracking-wide transition lg:w-auto lg:block">
-            <ul className="text-[18px] mr-72 flex flex-col  xl:flex-row items-center justify-around gap-[60px]">
+          <div className="p-6">
+            <nav className="tracking-wide">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-white text-xl font-bold">Menu</h2>
+              <button onClick={() => setIsNavExpanded(!isNavExpanded)} className="text-white">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+              <ul className="flex flex-col space-y-6 text-[18px]">
+                <li>
+                  <a href="/" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    Homepage
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/profiles" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    Profiles
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </a>
+                </li>
+                <li>
+                  <Link to="/news" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    News
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/events" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    Events
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/publications" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    Publications
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+    
+        {/* Desktop Navigation */}
+        <div className="hidden xl:block">
+          <nav className="tracking-wide">
+            <ul className="text-[18px] flex items-center gap-[60px]">
               <li>
-                <a  
-                  href="/"
-                  className="group transition duration-300 hover:text-[#2196F3]"
-                >
+                <a href="/" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
                   Homepage
-                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
                 </a>
               </li>
               <li>
-                <a
-                  href="/profiles"
-                  className="group transition duration-300 hover:text-[#2196F3]"
-                >
-                  Profiles
-                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
+                <a href="/profiles" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
+                Profiles
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
                 </a>
               </li>
               <li>
-                <Link
-                  to="/news"
-                  className="group transition duration-300 hover:text-[#2196F3]"
-                >
-                  News
-                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
-                </Link>
+                <a href="/news" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
+                News
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                </a>
               </li>
               <li>
-                <Link
-                  to="/events"
-                  className="group transition duration-300 hover:text-[#2196F3]"
-                >
-                  Events
-                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
-                </Link>
+                <a href="/events" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
+                Events
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                </a>
               </li>
               <li>
-                <Link
-                  to="/publications"
-                  className="group transition duration-300 hover:text-[#2196F3]"
-                >
-                  Publications
-                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3] text-white"></span>
-                </Link>
+                <a href="/publications" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
+                Publications
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                </a>
               </li>
             </ul>
           </nav>

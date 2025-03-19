@@ -5,54 +5,6 @@ import { format, parseISO } from "date-fns";
 import { id } from "date-fns/locale";
 import Swal from "sweetalert2";
 
-function renderLeft(props) {
-  const { event, isOdd } = props;
-  const imageUrls = event.image_url ? event.image_url.split(",") : [];
-
-  if (isOdd) {
-    return (
-      <div>
-        {imageUrls.length > 0 ? (
-          imageUrls.map((url, index) => (
-            <img
-              key={index}
-              src={url.trim()}
-            className="bg-cover !w-96 h-[300px]"
-              alt={`${item.title} - ${index + 1}`}
-            />
-          ))
-        ) : (
-          <p>No image available</p>
-        )}
-      </div>
-    )
-  }
-
-  return (
-    <div className="h-fit">
-      <h2
-        onClick={() => handleEventsDetail(item.slug)}
-        className="cursor-pointer card-title text-lg font-poppins"
-      >
-        {item.title}
-        {isRecent(item.published_at) && (
-          <div className="badge badge-warning">NEW</div>
-        )}
-      </h2>
-      <div
-        className="line-clamp-2"
-        dangerouslySetInnerHTML={{ __html: item.content }}
-      />
-      <div className="card-actions justify-end mt-2">
-        <div className="badge badge-outline">
-          {formatDate(item.published_at)}
-        </div>
-        <div className="badge badge-outline">{item.author}</div>
-      </div>
-    </div>
-  );
-}
-
 export default function LatestEvents() {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
@@ -125,100 +77,127 @@ export default function LatestEvents() {
 
   return (
     <>
-      <section className="mx-auto py-5 px-0">
-        <div className="mt-0 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center">
+      <section className="bg-cover bg-center bg-no-repeat mb-10 relative px-4 md:px-6 lg:px-8">
+        <div className="mt-8 md:mt-10 text-2xl md:text-3xl lg:text-4xl font-bold px-4 md:px-20 lg:px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center">
           Our Events
         </div>
-  
-        <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-1 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 mt-10">
+      
+        <div className="py-8 md:py-12 lg:py-16 mx-auto z-20">
           {events.map((item, index) => {
             const imageUrls = item.image_url ? item.image_url.split(",") : [];
-            const isOdd = index % 2 === 0;
-            if (isOdd) {
-              return (
-                <div className="card !flex !flex-row !w-full gap-6 rounded-lg  px-14">
-                  <div className="h-fit">
-                    <h2
-                      onClick={() => handleEventsDetail(item.slug)}
-                      className="cursor-pointer card-title text-lg font-poppins"
-                    >
-                      {item.title}
-                      {isRecent(item.published_at) && (
-                        <div className="badge badge-warning">NEW</div>
-                      )}
-                    </h2>
-                    <div
-                      className="line-clamp-2"
-                      dangerouslySetInnerHTML={{ __html: item.content }}
-                    />
-                    <div className="card-actions justify-end mt-2">
-                      <div className="badge badge-outline">
-                        {formatDate(item.published_at)}
+            const isOdd = index % 2 !== 0;
+            return (
+              <div key={`event-${index}`} className="mb-8 last:mb-0">
+                <div className="flex flex-col md:flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                  <div className="block sm:hidden relative w-full md:w-2/5 overflow-hidden text-gray-700 bg-white rounded-t-xl md:rounded-l-xl md:rounded-tr-none group">
+                    <div className="aspect-w-16 aspect-h-9 md:aspect-h-full">
+                      <img 
+                        src={imageUrls.length ? imageUrls[0].trim() : ''} 
+                        className="w-full h-48 md:h-[300px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" 
+                        alt={item.title || "Event image"}
+                      />
+                    </div>
+                    {/* Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="text-center p-4">
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white"> 
+                          Event Date <br /> 
+                          <span className="text-red-500"> {formatDate(item.published_at)}</span>
+                        </h2>
                       </div>
-                      <div className="badge badge-outline">{item.author}</div>
                     </div>
                   </div>
-                  {imageUrls.length > 0 ? (
-                    imageUrls.map((url, index) => (
-                      <img
-                        key={index}
-                        src={url.trim()}
-                        className="bg-cover !w-96 h-[300px]"
-                        alt={`${item.title} - ${index + 1}`}
+
+                  {/* asd */}
+                  {isOdd && (
+                    <div className="p-4 md:p-6 flex-1">
+                      <h6 className="mb-2 md:mb-4 font-sans text-sm md:text-base font-semibold text-red-500 uppercase">
+                        Event {formatDate(item.published_at)}
+                      </h6>
+                      <h4 className="mb-2 font-sans text-xl md:text-2xl font-semibold text-blue-gray-900 line-clamp-2">
+                        {item.title}
+                      </h4>
+                      <div className="line-clamp-2 md:line-clamp-3 text-sm md:text-base text-gray-600"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
                       />
-                    ))
-                  ) : (
-                    <p>No image available</p>
-                  )}
-                </div>
-              );
-            }
-            return (
-              <div className="card !flex !flex-row !w-full gap-6 px-14">
-                  {imageUrls.length > 0 ? (
-                    imageUrls.map((url, index) => (
-                      <img
-                        key={index}
-                        src={url.trim()}
-                      className="bg-cover !w-96 h-[300px]"
-                        alt={`${item.title} - ${index + 1}`}
-                      />
-                    ))
-                  ) : (
-                    <p>No image available</p>
+        
+                      <button 
+                        onClick={() => handleEventsDetail(item.slug)}
+                        className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 mt-4 md:mt-6 font-sans text-xs md:text-sm font-bold text-red-500 hover:text-white uppercase transition-all rounded-lg bg-pink-500/10 hover:bg-red-500" 
+                        type="button"
+                      >
+                        Lihat Detail
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                      </button>
+                    </div>
                   )}
 
-                  <div className="h-fit">
-                    <h2
-                      onClick={() => handleEventsDetail(item.slug)}
-                      className="cursor-pointer card-title text-lg font-poppins"
-                    >
-                      {item.title}
-                      {isRecent(item.published_at) && (
-                        <div className="badge badge-warning">NEW</div>
-                      )}
-                    </h2>
-                    <div
-                      className="line-clamp-2"
-                      dangerouslySetInnerHTML={{ __html: item.content }}
-                    />
-                    <div className="card-actions justify-end mt-2">
-                      <div className="badge badge-outline">
-                        {formatDate(item.published_at)}
+                  {/* Image Section Desktop */}
+                  <div className={`hidden sm:block relative w-full md:w-2/5 overflow-hidden text-gray-700 bg-white group
+                    ${isOdd ? 'rounded-r-xl md:rounded-r-xl' : 'rounded-l-xl md:rounded-l-xl'}`}>
+                    <div className="aspect-w-16 aspect-h-9 md:aspect-h-full">
+                      <img 
+                        src={imageUrls.length ? imageUrls[0].trim() : ''} 
+                        className="w-full h-48 md:h-[300px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" 
+                        alt={item.title || "Event image"}
+                      />
+                    </div>
+                    {/* Overlay */}
+                    <div className={`absolute inset-0 flex items-center justify-center bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                      ${isOdd ? 'rounded-r-xl md:rounded-r-xl' : 'rounded-l-xl md:rounded-l-xl'}`}>
+                      <div className="text-center p-4">
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white"> 
+                          Event Date <br /> 
+                          <span className="text-red-500">{formatDate(item.published_at)}</span>
+                        </h2>
                       </div>
-                      <div className="badge badge-outline">{item.author}</div>
                     </div>
                   </div>
+      
+                  {/* Content Section */}
+                  {!isOdd && (
+                    <div className="p-4 md:p-6 flex-1">
+                      <h6 className="mb-2 md:mb-4 font-sans text-sm md:text-base font-semibold text-red-500 uppercase">
+                        Event {formatDate(item.published_at)}
+                      </h6>
+                      <h4 className="mb-2 font-sans text-xl md:text-2xl font-semibold text-blue-gray-900 line-clamp-2">
+                        {item.title}
+                      </h4>
+                      <div className="line-clamp-2 md:line-clamp-3 text-sm md:text-base text-gray-600"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
+        
+                      <button 
+                        onClick={() => handleEventsDetail(item.slug)}
+                        className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 mt-4 md:mt-6 font-sans text-xs md:text-sm font-bold text-red-500 hover:text-white uppercase transition-all rounded-lg bg-pink-500/10 hover:bg-red-500" 
+                        type="button"
+                      >
+                        Lihat Detail
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            )
+            );
           })}
         </div>
-        <div className="mt-14 text-center">
-          <button
+      
+        {/* View More Button */}
+        <div className="flex justify-center pb-8 md:pb-12">
+          <button 
             onClick={handleViewMore}
-            className="bg-blue-900 text-white font-bold py-2 px-4 rounded-lg"
+            className="flex items-center gap-2 px-6 py-3 font-sans text-sm font-bold text-[#3699FF] hover:text-white uppercase transition-all rounded-lg bg-[#E1F0FF] hover:bg-[#3699FF]"
+            type="button"
           >
             View More
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+            </svg>
           </button>
         </div>
       </section>
