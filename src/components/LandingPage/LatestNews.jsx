@@ -152,7 +152,7 @@ export default function LatestNews() {
       </section> */}
       <section className="bg-cover bg-center bg-no-repeat py-20 mb-10 relative">
 
-        <div className="mt-10 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center">
+        <div className="mt-10 text-4xl font-bold text-blue-900 stroke-slate-400 drop-shadow-lg text-center">
           Latest News
         </div>
         <div className="px-4 md:px-6 lg:px-8 grid grid-cols-12 py-16 mx-auto z-20">

@@ -288,18 +288,18 @@ export default function AllNews() {
     <>
       <section className="mx-auto px-0 mb-24">
 
-        <div className="mt-28 text-4xl font-bold px-40 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
+        <div className="mt-28 text-4xl font-bold text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
           All News
         </div>
         
-        <SearchInput
+        {/* <SearchInput
           title="Search News..."
           placeholder="Search News..."
           value={search}
           onChange={handleSearch}
-        />
+        /> */}
 
-        <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-10">
+        {/* <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-10">
           {loading ? (
             <p>Loading news...</p>
           ) : (
@@ -342,24 +342,70 @@ export default function AllNews() {
               </div>
             ))
           )}
+        </div> */}
+
+        <div className="px-4 md:px-6 lg:px-8 grid grid-cols-12 py-8 mx-auto z-20">
+          <ul className="lg:gap-16 sm:gap-8 grid grid-cols-12 col-span-10 col-start-2 gap-6">
+            <li className="mb-6 md:mb-0 col-span-12 sm:col-span-12 lg:col-span-12">
+              <SearchInput
+                title="Search News..."
+                placeholder="Search News..."
+                value={search}
+                onChange={handleSearch}
+              />
+            </li>
+            {news.map((item) => {
+              const imageUrls = item.image_url ? item.image_url.split(",") : [];
+              return (
+                <li key={item.id} className="mb-6 md:mb-0 col-span-12 sm:col-span-6 lg:col-span-4">
+                  <a href="#" onClick={() => handleNewsDetail(item.slug)} className="block h-full">
+                    <div className="aspect-w-16 aspect-h-9 mb-4">
+                      <img 
+                        src={imageUrls.length ? imageUrls[0].trim() : ''} 
+                        className="w-full h-[300px] object-cover rounded-lg shadow-none transition transition-shadow duration-500 ease-in-out group-hover:shadow-lg" 
+                        alt={item.title || "News image"} 
+                      />
+                    </div>
+                    <div className="flex items-center mb-3">
+                      <span className="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-bold leading-5 text-white font-display mr-2 capitalize bg-red-500">
+                        News
+                      </span>
+                      <p className="font-mono text-xs font-normal opacity-75 text-black">
+                        {item.author} | {formatDate(item.published_at)}
+                      </p>
+                    </div>
+                    <p className="font-display max-w-sm text-2xl font-bold leading-tight">
+                      <span className="link-underline link-underline-black text-black">
+                        {item.title}
+                      </span>
+                    </p>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </section>
-      <div className="mt-16 mb-10">
-        <div className="join grid grid-cols-2 px-96 m-2">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="join-item btn btn-outline px-10"
-          >
-            Previous News
-          </button>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={news.length < pageSize}
-            className="join-item btn btn-outline px-10"
-          >
-            Next News
-          </button>
+      <div className="mt-8 md:mt-16 mb-6 md:mb-10">
+        <div className="flex justify-center px-4 md:px-8 lg:px-16">
+          <div className="join grid grid-cols-2 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="join-item btn btn-outline px-4 md:px-10 text-sm md:text-base"
+            >
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Prev</span>
+            </button>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={news.length < pageSize}
+              className="join-item btn btn-outline px-4 md:px-10 text-sm md:text-base"
+            >
+              <span className="hidden sm:inline">Next News</span>
+              <span className="sm:hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
       <ScrollToTopButton />

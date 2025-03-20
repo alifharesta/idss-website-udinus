@@ -141,7 +141,7 @@ export default function AllEvents() {
   return (
     <>
       <section className="mx-auto px-0 mb-24">
-        <div className="mt-28 text-4xl font-bold px-10 text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
+        <div className="mt-28 text-4xl font-bold text-blue-900 stroke-slate-400 drop-shadow-lg text-center ">
           All Events
         </div>
 
@@ -153,64 +153,73 @@ export default function AllEvents() {
           onChange={handleSearch}
         />
 
-        <div className="grid justify-items-center justify-center gap-y-6 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-10">
-          {loading ? (
-            <p>Loading events...</p>
-          ) : (
-            events.map((item) => (
-              <div
-                key={item.id}
-                className="card max-h-[1000px] bg-white text-black border-2 w-[350px] sm:w-[200px] md:w-[500px] lg:w-72 xl:w-96 shadow-xl rounded-xl"
-              >
-                <figure
-                  onClick={() => handleEventsDetail(item.slug)}
-                  className="cursor-pointer"
-                >
-                  <img
-                    src={item.image_url}
-                    className="bg-cover w-96 h-[300px]"
-                    alt={item.title}
-                  />
-                </figure>
-                <div className="card-body h-fit">
-                  <h2
-                    onClick={() => handleEventsDetail(item.slug)}
-                    className="cursor-pointer card-title text-lg font-poppins"
-                  >
-                    {item.title}
-                  </h2>
-                  <div
-                    className="line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: item.content }}
-                  />
-                  <div className="card-actions justify-end mt-2">
-                    <div className="badge badge-outline">
-                      {formatDate(item.published_at)}
+        {loading ? (<div className="w-full flex justify-center"><p>Loading Event...</p></div>) : (
+          <div className="px-4 md:px-6 lg:px-8 grid grid-cols-12 py-16 mx-auto z-20">
+            <ul className="lg:gap-16 sm:gap-8 grid grid-cols-12 col-span-10 col-start-2 gap-6">
+              {/* Start */}
+              {events.map((item) => (  
+                <li key={item.id} className="mb-6 md:mb-0 col-span-12 sm:col-span-6 lg:col-span-4 bg-white bg-clip-border text-gray-700 shadow-lg">
+                  <div className="flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                    {/* Image */}
+                    <div className="aspect-w-16 aspect-h-9 md:aspect-h-full rounded-l-lg">
+                      <img 
+                        src={item.image_url} 
+                        className="rounded-t-lg w-full h-48 md:h-[300px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" 
+                        alt={item.title || "Event image"}
+                      />
                     </div>
-                    <div className="badge badge-outline">{item.author}</div>
+
+                    <div className="p-4 md:p-6 flex-1">
+                      <h6 className="mb-2 md:mb-4 font-sans text-sm md:text-base font-semibold text-red-500 uppercase">
+                        Event {formatDate(item.published_at)}
+                      </h6>
+                      <h4 className="mb-2 font-sans text-xl md:text-2xl font-semibold text-blue-gray-900 line-clamp-2">
+                        {item.title}
+                      </h4>
+                      <div className="line-clamp-2 md:line-clamp-3 text-sm md:text-base text-gray-600"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
+        
+                      <button 
+                        onClick={() => handleEventsDetail(item.slug)}
+                        className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 mt-4 md:mt-6 font-sans text-xs md:text-sm font-bold text-red-500 hover:text-white uppercase transition-all rounded-lg bg-pink-500/10 hover:bg-red-500" 
+                        type="button"
+                      >
+                        Lihat Detail
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
       </section>
-      <div className="mt-16 mb-10">
-        <div className="join grid grid-cols-2 px-96 m-2">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="join-item btn btn-outline px-10"
-          >
-            Previous Events
-          </button>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={!isHaveNextPage}
-            className="join-item btn btn-outline px-10"
-          >
-            Next Events
-          </button>
+      <div className="mt-8 md:mt-16 mb-6 md:mb-10">
+        <div className="flex justify-center px-4 md:px-8 lg:px-16">
+          <div className="join grid grid-cols-2 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="join-item btn btn-outline px-4 md:px-10 text-sm md:text-base"
+            >
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Prev</span>
+            </button>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={!isHaveNextPage}
+              className="join-item btn btn-outline px-4 md:px-10 text-sm md:text-base"
+            >
+              <span className="hidden sm:inline">Next News</span>
+              <span className="sm:hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
       <ScrollToTopButton />

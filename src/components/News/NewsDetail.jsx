@@ -22,132 +22,134 @@ export default function NewsDetail() {
     content: `
       <p>Several lecturers have successfully obtained grant funds from DRTPM 2024. Out of 31 research titles submitted, 19 have passed the selection process. These 19 research titles consist of 12 fundamental research projects, 3 master's thesis research projects, 2 doctoral dissertation research projects, and 2 applied research projects. The research topics are divided into several areas: Artificial Intelligence (AI) for health, AI for data security, AI for smart society, AI for nature conservation, and High-Performance Computing (HPC).</p>
       <p>The number of research projects from FIK that have successfully received DRTPM grants continues to grow. With this funding, it is hoped that the quality of lecturers' research will improve and contribute significantly to society. Below are the titles that have received DRTPM 2024 funding:</p>
-      <table class="min-w-full text-left text-sm border-collapse border border-black">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="border border-black px-4 py-2">No</th>
-            <th class="border border-black px-4 py-2">Name</th>
-            <th class="border border-black px-4 py-2">Title</th>
-            <th class="border border-black px-4 py-2">Scheme</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm border-collapse border border-black whitespace-normal">
+          <thead class="bg-gray-200">
             <tr>
-              <td class="border px-4 py-2">1</td>
-              <td class="border px-4 py-2">Adhitya Nugraha, M.Cs</td>
-              <td class="border px-4 py-2">Lightweight dan Robust Model Berbasis Ensemble Learning untuk Deteksi Serangan IoT pada Edge Computing</td>
-              <td class="border px-4 py-2">Fundamental</td>
+              <th class="border border-black px-4 py-2">No</th>
+              <th class="border border-black px-4 py-2">Name</th>
+              <th class="border border-black px-4 py-2">Title</th>
+              <th class="border border-black px-4 py-2">Scheme</th>
             </tr>
-            <tr>
-              <td class="border px-4 py-2">2</td>
-              <td class="border px-4 py-2">Dr. Aris Marjuni, M.Kom</td>
-              <td class="border px-4 py-2">Perbaikan Kualitas Citra dengan Pendekatan Twofold Transformation Berbasis Guided Filtering untuk Meningkatkan Visibilitas pada Pemandangan Berkabut</td>
-              <td class="border px-4 py-2">Disertasi Doktor</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">3</td>
-              <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
-              <td class="border px-4 py-2">Pengembangan Sistem Informasi Geografis Berbasis Web untuk Pemetaan dan Monitoring Kualitas Air Sungai di Kota Bandung</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">4</td>
-              <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
-              <td class="border px-4 py-2">Optimasi Model Deep Learning dengan Modifikasi Fungsi Aktivasi untuk Deteksi dan Klasifikasi Penyakit Kanker Payudara pada Citra Histopatologi</td>
-              <td class="border px-4 py-2">Tesis Magister</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">5</td>
-              <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
-              <td class="border px-4 py-2">Peningkatan Keberagaman Data Menggunakan SMOTE-ENN untuk Klasifikasi Diagnosis Penyakit Diabetes Berbasis Stacking Ensemble Learning</td>
-              <td class="border px-4 py-2">Tesis Magister</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">6</td>
-              <td class="border px-4 py-2">Christy Atika Sari, M.Kom</td>
-              <td class="border px-4 py-2">Peningkatan Keamanan Smart Farming Berbasis Wireless Sensor Network Bentuk IoT Aeroponik Urban Farming Berbasis Quantum Cryptography</td>
-              <td class="border px-4 py-2">Terapan</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">7</td>
-              <td class="border px-4 py-2">Dr. Muljono, S.Si, M.Kom</td>
-              <td class="border px-4 py-2">Instrumen Pasien Monitor Hemoglobin dan Gula Darah Berbasis Deep Learning Multimodal Mini Array Spektrofotometri</td>
-              <td class="border px-4 py-2">Terapan</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">8</td>
-              <td class="border px-4 py-2">Dr. Muljono, S.Si, M.Kom</td>
-              <td class="border px-4 py-2">Pengembangan Metode Sentiment Analysis Berbahasa Indonesia Menggunakan Aspect Based Transform Learning Model</td>
-              <td class="border px-4 py-2">Disertasi Doktor</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">9</td>
-              <td class="border px-4 py-2">Dewi Agustini Santoso, M.Kom</td>
-              <td class="border px-4 py-2">Optimasi Pemilihan Produk dalam Parcel berbasis AI untuk Kelompok UMKM: Strategi Maksimalkan Nilai dan Efisiensi</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">10</td>
-              <td class="border px-4 py-2">Eko Hari Rachmawanto, M.Kom</td>
-              <td class="border px-4 py-2">Aplikasi Android Peningkatan Perlindungan Informasi Sensitif Citra Medis Berbasis Quantum Frequency Encryption, Arnold Cat Maps Scrambling, dan Discrete Wavelet Transform</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">11</td>
-              <td class="border px-4 py-2">Erika Devi Udayanti, M.Cs</td>
-              <td class="border px-4 py-2">Model Hybrid pada Sistem Monitoring Transportasi Cerdas untuk Mendeteksi Pelanggaran Berkendaraan mengggunakan Algoritma CNNLSTM</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">12</td>
-              <td class="border px-4 py-2">Dr. Farrikh Al Zami, M.Kom</td>
-              <td class="border px-4 py-2">Peningkatan Algoritma Deteksi Kelelahan pada CNN dengan pendekatan histogram menggunakan Data Kecil dan Lingkungan Minim Cahaya</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">13</td>
-              <td class="border px-4 py-2">Fauzi Adi Rafrastara, M.Cs</td>
-              <td class="border px-4 py-2">Deteksi Malware berbasis Machine Learning dan Seleksi Fitur untuk Melindungi Data pada Era Ekonomi Digital</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">14</td>
-              <td class="border px-4 py-2">Dr. Guruh Fajar Shidik, M.Cs</td>
-              <td class="border px-4 py-2">Sistem Peringatan Dini (Early Warning System) Dampak Bencana Alam Gempa Berbasis Internet of Things (IoT) dan Artificial Intelligent (AI)</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">15</td>
-              <td class="border px-4 py-2">Junta Zeniarja, M.Kom</td>
-              <td class="border px-4 py-2">Generative Empathetic Model for Artificial Therapeutic Intelligence (GEMATI): Inovasi Chatbot untuk Peningkatan Kesehatan Mental dan Kesejahteraan Psikologis di Indonesia</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">16</td>
-              <td class="border px-4 py-2">Lekso Budi Handoko, M.Kom</td>
-              <td class="border px-4 py-2">Optimisasi Efisiensi Energi pada Federated Edge Computing (FEC) melalui Peningkatan Fungsi Reward pada Agen Reinforcement Qlearning</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">17</td>
-              <td class="border px-4 py-2">Prof. Dr. Pulung Nurtantio Andono, ST, M.Kom</td>
-              <td class="border px-4 py-2">Pemetaan Hotspot Penangkapan Ikan dengan Memperhatikan Kesehatan Terumbu Karang melalui Pendekatan Computer Vision berbasis Convolution Neural Network dan Observasi Bumi</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">18</td>
-              <td class="border px-4 py-2">Prof. Dr. Pulung Nurtantio Andono, ST, M.Kom</td>
-              <td class="border px-4 py-2">Optimasi CNN melalui Pemilihan Metode Augmentasi Terbaik menggunakan Fox Optimization untuk Identifikasi Ikan</td>
-              <td class="border px-4 py-2">Tesis Magister</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">19</td>
-              <td class="border px-4 py-2">Dr. Ricardus Anggi Pramunendar, M.Cs</td>
-              <td class="border px-4 py-2">Pemetaan Tutupan Lahan untuk Manajemen Bencana Alam berbasis Computer Vision dan Adaptif Parameter CNN dalam Konteks Ekonomi Hijau</td>
-              <td class="border px-4 py-2">Fundamental</td>
-            </tr>
-          </tbody>
-      </table>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="border px-4 py-2">1</td>
+                <td class="border px-4 py-2">Adhitya Nugraha, M.Cs</td>
+                <td class="border px-4 py-2">Lightweight dan Robust Model Berbasis Ensemble Learning untuk Deteksi Serangan IoT pada Edge Computing</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">2</td>
+                <td class="border px-4 py-2">Dr. Aris Marjuni, M.Kom</td>
+                <td class="border px-4 py-2">Perbaikan Kualitas Citra dengan Pendekatan Twofold Transformation Berbasis Guided Filtering untuk Meningkatkan Visibilitas pada Pemandangan Berkabut</td>
+                <td class="border px-4 py-2">Disertasi Doktor</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">3</td>
+                <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
+                <td class="border px-4 py-2">Pengembangan Sistem Informasi Geografis Berbasis Web untuk Pemetaan dan Monitoring Kualitas Air Sungai di Kota Bandung</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">4</td>
+                <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
+                <td class="border px-4 py-2">Optimasi Model Deep Learning dengan Modifikasi Fungsi Aktivasi untuk Deteksi dan Klasifikasi Penyakit Kanker Payudara pada Citra Histopatologi</td>
+                <td class="border px-4 py-2">Tesis Magister</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">5</td>
+                <td class="border px-4 py-2">Dr. Catur Supriyanto, MCs</td>
+                <td class="border px-4 py-2">Peningkatan Keberagaman Data Menggunakan SMOTE-ENN untuk Klasifikasi Diagnosis Penyakit Diabetes Berbasis Stacking Ensemble Learning</td>
+                <td class="border px-4 py-2">Tesis Magister</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">6</td>
+                <td class="border px-4 py-2">Christy Atika Sari, M.Kom</td>
+                <td class="border px-4 py-2">Peningkatan Keamanan Smart Farming Berbasis Wireless Sensor Network Bentuk IoT Aeroponik Urban Farming Berbasis Quantum Cryptography</td>
+                <td class="border px-4 py-2">Terapan</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">7</td>
+                <td class="border px-4 py-2">Dr. Muljono, S.Si, M.Kom</td>
+                <td class="border px-4 py-2">Instrumen Pasien Monitor Hemoglobin dan Gula Darah Berbasis Deep Learning Multimodal Mini Array Spektrofotometri</td>
+                <td class="border px-4 py-2">Terapan</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">8</td>
+                <td class="border px-4 py-2">Dr. Muljono, S.Si, M.Kom</td>
+                <td class="border px-4 py-2">Pengembangan Metode Sentiment Analysis Berbahasa Indonesia Menggunakan Aspect Based Transform Learning Model</td>
+                <td class="border px-4 py-2">Disertasi Doktor</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">9</td>
+                <td class="border px-4 py-2">Dewi Agustini Santoso, M.Kom</td>
+                <td class="border px-4 py-2">Optimasi Pemilihan Produk dalam Parcel berbasis AI untuk Kelompok UMKM: Strategi Maksimalkan Nilai dan Efisiensi</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">10</td>
+                <td class="border px-4 py-2">Eko Hari Rachmawanto, M.Kom</td>
+                <td class="border px-4 py-2">Aplikasi Android Peningkatan Perlindungan Informasi Sensitif Citra Medis Berbasis Quantum Frequency Encryption, Arnold Cat Maps Scrambling, dan Discrete Wavelet Transform</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">11</td>
+                <td class="border px-4 py-2">Erika Devi Udayanti, M.Cs</td>
+                <td class="border px-4 py-2">Model Hybrid pada Sistem Monitoring Transportasi Cerdas untuk Mendeteksi Pelanggaran Berkendaraan mengggunakan Algoritma CNNLSTM</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">12</td>
+                <td class="border px-4 py-2">Dr. Farrikh Al Zami, M.Kom</td>
+                <td class="border px-4 py-2">Peningkatan Algoritma Deteksi Kelelahan pada CNN dengan pendekatan histogram menggunakan Data Kecil dan Lingkungan Minim Cahaya</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">13</td>
+                <td class="border px-4 py-2">Fauzi Adi Rafrastara, M.Cs</td>
+                <td class="border px-4 py-2">Deteksi Malware berbasis Machine Learning dan Seleksi Fitur untuk Melindungi Data pada Era Ekonomi Digital</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">14</td>
+                <td class="border px-4 py-2">Dr. Guruh Fajar Shidik, M.Cs</td>
+                <td class="border px-4 py-2">Sistem Peringatan Dini (Early Warning System) Dampak Bencana Alam Gempa Berbasis Internet of Things (IoT) dan Artificial Intelligent (AI)</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">15</td>
+                <td class="border px-4 py-2">Junta Zeniarja, M.Kom</td>
+                <td class="border px-4 py-2">Generative Empathetic Model for Artificial Therapeutic Intelligence (GEMATI): Inovasi Chatbot untuk Peningkatan Kesehatan Mental dan Kesejahteraan Psikologis di Indonesia</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">16</td>
+                <td class="border px-4 py-2">Lekso Budi Handoko, M.Kom</td>
+                <td class="border px-4 py-2">Optimisasi Efisiensi Energi pada Federated Edge Computing (FEC) melalui Peningkatan Fungsi Reward pada Agen Reinforcement Qlearning</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">17</td>
+                <td class="border px-4 py-2">Prof. Dr. Pulung Nurtantio Andono, ST, M.Kom</td>
+                <td class="border px-4 py-2">Pemetaan Hotspot Penangkapan Ikan dengan Memperhatikan Kesehatan Terumbu Karang melalui Pendekatan Computer Vision berbasis Convolution Neural Network dan Observasi Bumi</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">18</td>
+                <td class="border px-4 py-2">Prof. Dr. Pulung Nurtantio Andono, ST, M.Kom</td>
+                <td class="border px-4 py-2">Optimasi CNN melalui Pemilihan Metode Augmentasi Terbaik menggunakan Fox Optimization untuk Identifikasi Ikan</td>
+                <td class="border px-4 py-2">Tesis Magister</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">19</td>
+                <td class="border px-4 py-2">Dr. Ricardus Anggi Pramunendar, M.Cs</td>
+                <td class="border px-4 py-2">Pemetaan Tutupan Lahan untuk Manajemen Bencana Alam berbasis Computer Vision dan Adaptif Parameter CNN dalam Konteks Ekonomi Hijau</td>
+                <td class="border px-4 py-2">Fundamental</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
     `,
     image_url: news1,
     published_at: new Date().toISOString(),
