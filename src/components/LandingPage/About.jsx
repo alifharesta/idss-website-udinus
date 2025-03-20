@@ -4,13 +4,21 @@ import Footer from "./Footer";
 
 export default function About() {
   const navigate = useNavigate();
-
+  
+  const handleClickBack = () => {
+    navigate("/");
+  };
 
   return (
     <section className="container mx-auto py-4 px-8 mt-24">
       <main className="container mx-auto px-4 mt-8">
+      <button
+          onClick={handleClickBack}
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
+        >
+          Back to Home
+        </button>
         <div className="container mt-10">
-         
           <h1 className="text-5xl text-black font-medium mb-8 mt-4">About Us</h1>
         </div>
 
