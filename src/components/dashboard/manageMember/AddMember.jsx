@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import { gl } from "date-fns/locale";
 
 export default function AddNews() {
-  const [gelar, setGelar] = useState(""); 
+  const [gelar, setGelar] = useState("");
   const [nama, setNama] = useState("");
   const [bidang, setBidang] = useState("");
   const [jabatan, setJabatan] = useState("");
   const [image, setImage] = useState(null);
   const [imageBlob, setImageBlob] = useState(null);
+  const [scopusId, setScopusId] = useState("");
+  const [sintaId, setSintaId] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -29,19 +31,29 @@ export default function AddNews() {
     if (!value.trim()) return "Gelar harus diisi";
     return "";
   };
-  
+
   const validateNama = (value) => {
     if (!value.trim()) return "Nama harus diisi";
     return "";
   };
 
-  const validateBidang = (value) => {
-    if (!value.trim()) return "Bidang harus diisi";
-    return "";
-  };
+  // const validateBidang = (value) => {
+  //   if (!value.trim()) return "Bidang harus diisi";
+  //   return "";
+  // };
 
   const validateJabatan = (value) => {
     if (!value.trim()) return "Jabatan harus diisi";
+    return "";
+  };
+
+  const validateScopusId = (value) => {
+    if (!value.trim()) return "Scopus ID harus diisi";
+    return "";
+  };
+
+  const validateSintaId = (value) => {
+    if (!value.trim()) return "Sinta ID harus diisi";
     return "";
   };
 
@@ -87,26 +99,33 @@ export default function AddNews() {
       URL.revokeObjectURL(imageBlob);
     }
     setImageBlob(null);
-    setErrors({ ...errors, image: "Gambar harus diunggah" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const gelarError = validateGelar(gelar);
     const namaError = validateNama(nama);
-    const bidangError = validateBidang(bidang);
+    // const bidangError = validateBidang(bidang);
     const jabatanError = validateJabatan(jabatan);
-    const imageError = !image ? "Gambar harus diunggah" : "";
-
+    const scopusIdError = validateScopusId(scopusId);
+    const sintaIdError = validateSintaId(sintaId);
     setErrors({
       gelar: gelarError,
       nama: namaError,
-      bidang: bidangError,
+      // bidang: bidangError,
       jabatan: jabatanError,
-      image: imageError,
+      scopusId: scopusIdError,
+      sintaId: sintaIdError,
     });
 
-    if (gelarError || namaError || bidangError || jabatanError || imageError) {
+    if (
+      gelarError ||
+      namaError ||
+      // bidangError ||
+      jabatanError ||
+      scopusIdError ||
+      sintaIdError
+    ) {
       return;
     }
 
@@ -144,7 +163,7 @@ export default function AddNews() {
       }
 
       console.log("Inserting member data");
-      
+
       const { data, error } = await supabase.from("members").insert([
         {
           gelar,
@@ -152,6 +171,8 @@ export default function AddNews() {
           bidang,
           jabatan,
           image_url: imageUrl,
+          scopus_id: scopusId,
+          sinta_id: sintaId,
         },
       ]);
 
@@ -174,6 +195,8 @@ export default function AddNews() {
       setBidang("");
       setJabatan("");
       setImage(null);
+      setScopusId("");
+      setSintaId("");
       handleCancelImage();
       setErrors({});
     } catch (error) {
@@ -189,6 +212,31 @@ export default function AddNews() {
       setLoading(false);
     }
   };
+  // Options for gelar
+  const gelarOptions = ["Dr.", "Prof. Dr."];
+  // Options for jabatan
+  const jabatanOptions = [
+    "Advisory Board",
+    "Director",
+    "Secretary 1",
+    "Secretary 2",
+    "Coordinator AI for Medical Science",
+    "Coordinator AI for Natural Disaster",
+    "Coordinator AI for Game",
+    "Coordinator AI for Smart Society, Food, and Agriculture",
+    "Coordinator AI for High Performance Computing",
+    "Coordinator AI for Data Security",
+    "Member",
+  ];
+  // Options for bidang
+  const bidangOptions = [
+    "AI for Medical Science",
+    "AI for Natural Disaster",
+    "AI for Game",
+    "AI for Smart Society, Food, and Agriculture",
+    "AI for High Performance Computing",
+    "AI for Data Security",
+  ];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -196,19 +244,25 @@ export default function AddNews() {
         <label className="font-poppins text-lg block mb-2" htmlFor="gelar">
           Gelar:
         </label>
-        <input
+        <select
           className={`border-2 ${
-            errors.title ? "border-red-500" : "border-gray-500"
+            errors.gelar ? "border-red-500" : "border-gray-500"
           } p-2 rounded-lg w-full`}
-          type="text"
           id="gelar"
           value={gelar}
           onChange={(e) => {
             setGelar(e.target.value);
-            setErrors({ ...errors, title: validateGelar(e.target.value) });
+            setErrors({ ...errors, gelar: validateGelar(e.target.value) });
           }}
           required
-        />
+        >
+          <option value="">Pilih Gelar</option>
+          {gelarOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         {errors.gelar && (
           <p className="text-red-500 text-sm mt-1">{errors.gelar}</p>
         )}
@@ -251,11 +305,7 @@ export default function AddNews() {
             file:text-sm file:font-semibold
             file:bg-blue-50 file:text-blue-700
             hover:file:bg-blue-100`}
-          required
         />
-        {errors.image && (
-          <p className="text-red-500 text-sm mt-1">{errors.image}</p>
-        )}
         {imageBlob && (
           <div className="mt-4 relative">
             <img
@@ -290,7 +340,7 @@ export default function AddNews() {
         <label className="font-poppins text-lg block mb-2" htmlFor="bidang">
           Bidang:
         </label>
-        <input
+        <select
           className={`border-2 ${
             errors.bidang ? "border-red-500" : "border-gray-500"
           } p-2 rounded-lg w-full`}
@@ -301,17 +351,23 @@ export default function AddNews() {
             setBidang(e.target.value);
             setErrors({ ...errors, title: validateBidang(e.target.value) });
           }}
-          required
-        />
-        {errors.bidang && (
+        >
+          <option value="">Pilih Bidang</option>
+          {bidangOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        {/* {errors.bidang && (
           <p className="text-red-500 text-sm mt-1">{errors.bidang}</p>
-        )}
+        )} */}
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="jabatan">
           Jabatan:
         </label>
-        <input
+        <select
           className={`border-2 ${
             errors.title ? "border-red-500" : "border-gray-500"
           } p-2 rounded-lg w-full`}
@@ -323,9 +379,63 @@ export default function AddNews() {
             setErrors({ ...errors, title: validateJabatan(e.target.value) });
           }}
           required
-        />
+        >
+          <option value="">Pilih Jabatan</option>
+          {jabatanOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         {errors.jabatan && (
           <p className="text-red-500 text-sm mt-1">{errors.jabatan}</p>
+        )}
+      </div>
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="scopusId">
+          Scopus ID:
+        </label>
+        <input
+          className={`border-2 ${
+            errors.scopusId ? "border-red-500" : "border-gray-500"
+          } p-2 rounded-lg w-full`}
+          type="text"
+          id="scopusId"
+          value={scopusId}
+          onChange={(e) => {
+            setScopusId(e.target.value);
+            setErrors({
+              ...errors,
+              scopusId: validateScopusId(e.target.value),
+            });
+          }}
+          required
+        />
+        <img>
+        </img>
+        {errors.scopusId && (
+          <p className="text-red-500 text-sm mt-1">{errors.scopusId}</p>
+        )}
+      </div>
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="sintaId">
+          Sinta ID:
+        </label>
+        <input
+          className={`border-2 ${
+            errors.sintaId ? "border-red-500" : "border-gray-500"
+          } p-2 rounded-lg w-full`}
+          type="text"
+          id="sintaId"
+          value={sintaId}
+          onChange={(e) => {
+            setSintaId(e.target.value);
+            setErrors({ ...errors, sintaId: validateSintaId(e.target.value) });
+          }}
+          required
+        />
+        {errors.sintaId && (
+          <p className="text-red-500 text-sm mt-1">{errors.sintaId}</p>
         )}
       </div>
       <button
@@ -342,7 +452,10 @@ export default function AddNews() {
         {loading ? "Menambahkan..." : "Add Member"}
       </button>
       <button>
-        <Link to="/dashboard/manage-members" className="mt-4 ml-5 px-4 py-2 font-bold bg-red-500 text-white rounded-full">
+        <Link
+          to="/dashboard/manage-members"
+          className="mt-4 ml-5 px-4 py-2 font-bold bg-red-500 text-white rounded-full"
+        >
           Back
         </Link>
       </button>

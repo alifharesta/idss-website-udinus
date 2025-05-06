@@ -8,6 +8,8 @@ export default function EditNewsForm() {
   const [nama, setNama] = useState("");
   const [bidang, setBidang] = useState("");
   const [jabatan, setJabatan] = useState("");
+  const [scopusId, setScopusId] = useState("");
+  const [sintaId, setSintaId] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,8 @@ export default function EditNewsForm() {
       setNama(data.nama);
       setBidang(data.bidang);
       setJabatan(data.jabatan);
+      setScopusId(data.scopus_id);
+      setSintaId(data.sinta_id);
       setImageUrl(data.image_url);
     } catch (error) {
       Swal.fire("Error", "Failed to fetch member: " + error.message, "error");
