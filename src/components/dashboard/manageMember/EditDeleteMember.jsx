@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 export default function EditNewsForm() {
   const [gelar, setGelar] = useState("");
@@ -81,6 +82,8 @@ export default function EditNewsForm() {
           nama,
           bidang,
           jabatan,
+          scopus_id: scopusId,
+          sinta_id: sintaId,
           image_url: newImageUrl,
         })
         .eq("id", id);
@@ -90,7 +93,7 @@ export default function EditNewsForm() {
       Swal.fire("Success", "Members updated successfully", "success");
       navigate("/dashboard/manage-members");
     } catch (error) {
-      Swal.fire("Error", "Failed to update news: " + error.message, "error");
+      Swal.fire("Error", "Failed to update : " + error.message, "error");
     } finally {
       setLoading(false);
     }
@@ -100,20 +103,53 @@ export default function EditNewsForm() {
     return <div>Loading...</div>;
   }
 
+  // Options for gelar
+  const gelarOptions = ["Dr.", "Prof. Dr."];
+  // Options for jabatan
+  const jabatanOptions = [
+    "Advisory Board",
+    "Director",
+    "Secretary 1",
+    "Secretary 2",
+    "Coordinator AI for Medical Science",
+    "Coordinator AI for Natural Disaster",
+    "Coordinator AI for Game",
+    "Coordinator AI for Smart Society, Food, and Agriculture",
+    "Coordinator AI for High Performance Computing",
+    "Coordinator AI for Data Security",
+    "Member",
+  ];
+  // Options for bidang
+  const bidangOptions = [
+    "AI for Medical Science",
+    "AI for Natural Disaster",
+    "AI for Game",
+    "AI for Smart Society, Food, and Agriculture",
+    "AI for High Performance Computing",
+    "AI for Data Security",
+  ];
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="gelar">
           Gelar:
         </label>
-        <input
+        <select
           className="border-2 border-gray-500 p-2 rounded-lg w-full"
           type="text"
           id="gelar"
           value={gelar}
           onChange={(e) => setGelar(e.target.value)}
           required
-        />
+        >
+          <option value="">Pilih Gelar</option>
+          {gelarOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="nama">
@@ -156,25 +192,41 @@ export default function EditNewsForm() {
         <label className="font-poppins text-lg block mb-2" htmlFor="bidang">
           Bidang:
         </label>
-        <textarea
+        <select
+          className="p-2 rounded-lg w-full"
           id="bidang"
           value={bidang}
           onChange={(e) => setBidang(e.target.value)}
-          required
-          className="border-2 border-gray-500 p-2 rounded-lg w-full h-40"
-        />
+        >
+          <option value="">Pilih Bidang</option>
+          {bidangOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="jabatan">
           Jabatan:
         </label>
-        <textarea
+        <select
+          className="p-2 rounded-lg w-full"
+          type="text"
           id="jabatan"
           value={jabatan}
-          onChange={(e) => setJabatan(e.target.value)}
+          onChange={(e) => {
+            setJabatan(e.target.value);
+          }}
           required
-          className="border-2 border-gray-500 p-2 rounded-lg w-full h-40"
-        />
+        >
+          <option value="">Pilih Jabatan</option>
+          {jabatanOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
       <button
         type="submit"
@@ -184,6 +236,14 @@ export default function EditNewsForm() {
         }`}
       >
         {loading ? "Updating..." : "Update Member"}
+      </button>
+      <button>
+        <Link
+          to="/dashboard/manage-members"
+          className="mt-4 ml-5 px-4 py-2 font-bold bg-red-500 text-white rounded-full"
+        >
+          Back
+        </Link>
       </button>
     </form>
   );

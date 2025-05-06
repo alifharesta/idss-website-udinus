@@ -20,7 +20,7 @@ export default function HeroSection() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-left container mx-auto my-auto px-4 md:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             {/* Content Section */}
-            <div className="col-span-1 md:col-span-6 flex flex-col justify-center items-start gap-4 md:gap-6">
+            <div className="col-span-1 mx-auto lg:px-[60px] md:col-span-6 flex flex-col justify-center items-start gap-4 md:gap-6">
               <h1 className="text-2xl sm:text-3xl md:text-6xl font-bold text-gray-800 leading-tight font-poppins">
                 IDSS
               </h1>

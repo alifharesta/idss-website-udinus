@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import NavbarCp from "../LandingPage/NavbarCp";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../services/supabaseClient";
+import scopusicon from "../../assets/landingpage/scopusicon.png";
+import sintaicon from "../../assets/landingpage/sintaicon.jpeg";
 
 export default function Profile() {
   const [members, setMembers] = useState([]);
@@ -46,8 +48,8 @@ export default function Profile() {
   return (
     <>
       <NavbarCp />
-      <section className="container mx-auto py-4 px-8 mt-24">
-        <h1 className="text-4xl font-poppins font-bold mb-8">Committee</h1>
+      <section className="container ml-14 py-4 px-8 mt-24">
+        <h1 className="text-4xl font-poppins font-bold mt-4 mb-8">Committee</h1>
         <ul className="space-y-6">
           {members.map((person) => (
             <li key={person.id} className="border-b pb-4">
@@ -56,19 +58,24 @@ export default function Profile() {
                   <h2 className="text-3xl font-poppins font-medium">
                     {person.gelar} {person.nama}
                   </h2>
-                  <p className="text-lg font-poppins">{person.jabatan}</p>
+                  <p className="mt-2 font-light text-lg font-poppins">{person.jabatan}</p>
                   <p className="text-base font-poppins text-gray-600">{person.bidang}</p>
-                  <div className="mt-2 space-y-1">
+                  <div className="mt-2 translate-x-[-38px] translate-y-1 grid grid-cols-2">
+                    <button className="bg-white text-white font-poppins">
                     {person.scopus_id && (
                       <a
                         href={`${person.scopus_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm font-poppins block"
+                        className="text-blue-600 text-sm font-poppins block"
                       >
-                        Scopus Profile
+                        <img src={scopusicon} alt="scopus" className="w-4 h-4 inline-block mr-1" />
+                        SCOPUS
                       </a>
+
                     )}
+                    </button>
+                    <button className="bg-white text-white font-poppins">
                     {person.sinta_id && (
                       <a
                         href={`${person.sinta_id}`}
@@ -76,9 +83,11 @@ export default function Profile() {
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800 text-sm font-poppins block"
                       >
-                        Sinta Profile
+                        <img src={sintaicon} alt="sintaicon" className="w-4 h-4 inline-block mr-1" />
+                        SINTA
                       </a>
                     )}
+                    </button>
                   </div>
                 </div>
               </div>

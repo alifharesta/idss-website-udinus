@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import { gl } from "date-fns/locale";
 
 export default function AddNews() {
   const [gelar, setGelar] = useState("");

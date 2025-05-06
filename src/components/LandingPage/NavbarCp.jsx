@@ -35,7 +35,7 @@ export default function index(props) {
           : "pt-[12px] lg:pt-[20px] bg-white lg:bg-transparent"
       } ${props.fix ? "lg:bg-white !pt-[12px]" : ""}`}
     >
-      <header className="container m-auto font-roboto flex flex-wrap items-center justify-between px-2">
+      <header className="container mx-auto px-4 lg:px-14 py-2 lg:py-0 font-roboto flex flex-wrap items-center justify-between">
         <div className="flex items-center justify-between w-full xl:w-auto">
           <a href="\" className="">
             <img src={logotext} alt="" className="!w-[250px] md:!w-[350px] ml-4 md:ml-10" />
