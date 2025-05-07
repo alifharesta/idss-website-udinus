@@ -19,20 +19,23 @@ export default function Profile() {
       setLoading(true);
       const { data, error } = await supabase
         .from("members")
-        .select(`
-          gelar,
+        .select(
+          `
+          id,
+          gelar_depan,
+          gelar_belakang,
           nama,
           jabatan,
           bidang,
           scopus_id,
           sinta_id,
           created_at
-        `)
+        `
+        )
         .order("created_at", { ascending: true });
-  
+
       if (error) throw error;
-      
-      console.log("Fetched members data:", data); // For debugging
+
       setMembers(data);
     } catch (error) {
       console.error("Error fetching members:", error.message);
@@ -56,14 +59,25 @@ export default function Profile() {
               <div className="flex flex-col space-y-2">
                 <div>
                   <h2 className="text-3xl font-poppins font-medium">
-                    {person.gelar} {person.nama}
+                    {person.gelar_depan} {person.nama}{" "}
+                    {person.gelar_belakang && (
+                      <span>
+                        {Array.isArray(person.gelar_belakang)
+                          ? person.gelar_belakang.join(", ")
+                          : person.gelar_belakang}
+                      </span>
+                    )}
                   </h2>
-                  <p className="mt-2 font-light text-lg font-poppins">{person.jabatan}</p>
-                  <p className="text-base font-poppins text-gray-600">{person.bidang}</p>
-                  </div>
-                  {/* profile container */}
-                  <div className="flex gap-4 mt-2">
-                    <button className=" bg-white text-white font-poppins">
+                  <p className="mt-2 font-light text-lg font-poppins">
+                    {person.jabatan}
+                  </p>
+                  <p className="text-base font-poppins text-gray-600">
+                    {person.bidang}
+                  </p>
+                </div>
+                {/* profile container */}
+                <div className="flex gap-4 mt-2">
+                  <button className=" bg-white text-white font-poppins">
                     {person.scopus_id && (
                       <a
                         href={`${person.scopus_id}`}
@@ -71,13 +85,16 @@ export default function Profile() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
                       >
-                        <img src={scopusicon} alt="scopus" className="w-4 h-4 inline-block mr-1" />
+                        <img
+                          src={scopusicon}
+                          alt="scopus"
+                          className="w-4 h-4 inline-block mr-1"
+                        />
                         SCOPUS
                       </a>
-
                     )}
-                    </button>
-                    <button className="bg-white text-white font-poppins">
+                  </button>
+                  <button className="bg-white text-white font-poppins">
                     {person.sinta_id && (
                       <a
                         href={`${person.sinta_id}`}
@@ -85,13 +102,17 @@ export default function Profile() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
                       >
-                        <img src={sintaicon} alt="sintaicon" className="w-4 h-4 inline-block mr-1" />
+                        <img
+                          src={sintaicon}
+                          alt="sintaicon"
+                          className="w-4 h-4 inline-block mr-1"
+                        />
                         SINTA
                       </a>
                     )}
-                    </button>
-                  </div>
+                  </button>
                 </div>
+              </div>
             </li>
           ))}
         </ul>
