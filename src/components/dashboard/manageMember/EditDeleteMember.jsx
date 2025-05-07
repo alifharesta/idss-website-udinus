@@ -228,6 +228,38 @@ export default function EditNewsForm() {
           ))}
         </select>
       </div>
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="scopusId">
+          Scopus ID:
+        </label>
+        <input
+          className="p-2 rounded-lg w-full"
+          type="text"
+          id="scopusId"
+          value={scopusId}
+          onChange={(e) => {
+            setScopusId(e.target.value);
+          }}
+          required
+        />
+        <img>
+        </img>
+      </div>
+      <div>
+        <label className="font-poppins text-lg block mb-2" htmlFor="sintaId">
+          Sinta ID:
+        </label>
+        <input
+          className="p-2 rounded-lg w-full"
+          type="text"
+          id="sintaId"
+          value={sintaId}
+          onChange={(e) => {
+            setSintaId(e.target.value);
+          }}
+          required
+        />
+      </div>
       <button
         type="submit"
         disabled={loading}

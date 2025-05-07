@@ -53,21 +53,23 @@ export default function Profile() {
         <ul className="space-y-6">
           {members.map((person) => (
             <li key={person.id} className="border-b pb-4">
-              <div className="flex items-start space-x-4">
+              <div className="flex flex-col space-y-2">
                 <div>
                   <h2 className="text-3xl font-poppins font-medium">
                     {person.gelar} {person.nama}
                   </h2>
                   <p className="mt-2 font-light text-lg font-poppins">{person.jabatan}</p>
                   <p className="text-base font-poppins text-gray-600">{person.bidang}</p>
-                  <div className="mt-2 translate-x-[-38px] translate-y-1 grid grid-cols-2">
-                    <button className="bg-white text-white font-poppins">
+                  </div>
+                  {/* profile container */}
+                  <div className="flex gap-4 mt-2">
+                    <button className=" bg-white text-white font-poppins">
                     {person.scopus_id && (
                       <a
                         href={`${person.scopus_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 text-sm font-poppins block"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
                       >
                         <img src={scopusicon} alt="scopus" className="w-4 h-4 inline-block mr-1" />
                         SCOPUS
@@ -81,7 +83,7 @@ export default function Profile() {
                         href={`${person.sinta_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm font-poppins block"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
                       >
                         <img src={sintaicon} alt="sintaicon" className="w-4 h-4 inline-block mr-1" />
                         SINTA
@@ -90,7 +92,6 @@ export default function Profile() {
                     </button>
                   </div>
                 </div>
-              </div>
             </li>
           ))}
         </ul>

@@ -3,8 +3,9 @@ import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-export default function AddNews() {
-  const [gelar, setGelar] = useState("");
+export default function AddMember() {
+  const [gelarDepan, setGelarDepan] = useState("");
+  const [gelarBelakangList, setGelarBelakangList] = useState([]);
   const [nama, setNama] = useState("");
   const [bidang, setBidang] = useState("");
   const [jabatan, setJabatan] = useState("");
@@ -12,10 +13,13 @@ export default function AddNews() {
   const [imageBlob, setImageBlob] = useState(null);
   const [scopusId, setScopusId] = useState("");
   const [sintaId, setSintaId] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const quillRef = useRef(null);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   //Image
   useEffect(() => {
@@ -26,10 +30,46 @@ export default function AddNews() {
     };
   }, [imageBlob]);
 
-  const validateGelar = (value) => {
-    if (!value.trim()) return "Gelar harus diisi";
-    return "";
-  };
+  // Options for gelar
+  const gelarOptions = ["Dr.", "Prof. Dr."];
+  const gelarBelakangOptions = [
+    "S.Kom.",
+    "S.T.",
+    "S.Si.",
+    "M.Kom.",
+    "M.Cs.",
+    "M.Si.",
+    "M.Eng.",
+  ];
+
+  // Options for jabatan
+  const jabatanOptions = [
+    "Advisory Board",
+    "Chairman",
+    "Secretary 1",
+    "Secretary 2",
+    "Coordinator AI for Medical Science",
+    "Coordinator AI for Natural Disaster",
+    "Coordinator AI for Game",
+    "Coordinator AI for Smart Society, Food, and Agriculture",
+    "Coordinator AI for High Performance Computing",
+    "Coordinator AI for Data Security",
+    "Member",
+  ];
+  // Options for bidang
+  const bidangOptions = [
+    "AI for Medical Science",
+    "AI for Natural Disaster",
+    "AI for Game",
+    "AI for Smart Society, Food, and Agriculture",
+    "AI for High Performance Computing",
+    "AI for Data Security",
+  ];
+
+  // const validateGelar = (value) => {
+  //   if (!value.trim()) return "Gelar harus diisi";
+  //   return "";
+  // };
 
   const validateNama = (value) => {
     if (!value.trim()) return "Nama harus diisi";
@@ -99,17 +139,24 @@ export default function AddNews() {
     }
     setImageBlob(null);
   };
-
+  const handleGelarBelakangChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    setGelarBelakangList(selectedOptions);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const gelarError = validateGelar(gelar);
+    // const gelarError = validateGelar(gelar);
+    // Add inside handleSubmit before the insert
+    const combinedGelarBelakang = gelarBelakangList.join(", ");
     const namaError = validateNama(nama);
     // const bidangError = validateBidang(bidang);
     const jabatanError = validateJabatan(jabatan);
     const scopusIdError = validateScopusId(scopusId);
     const sintaIdError = validateSintaId(sintaId);
     setErrors({
-      gelar: gelarError,
+      // gelar: gelarError,
       nama: namaError,
       // bidang: bidangError,
       jabatan: jabatanError,
@@ -118,7 +165,7 @@ export default function AddNews() {
     });
 
     if (
-      gelarError ||
+      // gelarError ||
       namaError ||
       // bidangError ||
       jabatanError ||
@@ -165,7 +212,8 @@ export default function AddNews() {
 
       const { data, error } = await supabase.from("members").insert([
         {
-          gelar,
+          gelar_depan: gelarDepan,
+          gelar_belakang: combinedGelarBelakang,
           nama,
           bidang,
           jabatan,
@@ -189,7 +237,8 @@ export default function AddNews() {
         confirmButtonColor: "#3085d6",
       });
 
-      setGelar("");
+      setGelarDepan("");
+      setGelarBelakangList([]);
       setNama("");
       setBidang("");
       setJabatan("");
@@ -211,49 +260,21 @@ export default function AddNews() {
       setLoading(false);
     }
   };
-  // Options for gelar
-  const gelarOptions = ["Dr.", "Prof. Dr."];
-  // Options for jabatan
-  const jabatanOptions = [
-    "Advisory Board",
-    "Director",
-    "Secretary 1",
-    "Secretary 2",
-    "Coordinator AI for Medical Science",
-    "Coordinator AI for Natural Disaster",
-    "Coordinator AI for Game",
-    "Coordinator AI for Smart Society, Food, and Agriculture",
-    "Coordinator AI for High Performance Computing",
-    "Coordinator AI for Data Security",
-    "Member",
-  ];
-  // Options for bidang
-  const bidangOptions = [
-    "AI for Medical Science",
-    "AI for Natural Disaster",
-    "AI for Game",
-    "AI for Smart Society, Food, and Agriculture",
-    "AI for High Performance Computing",
-    "AI for Data Security",
-  ];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="gelar">
-          Gelar:
+          Gelar Depan:
         </label>
         <select
-          className={`border-2 ${
-            errors.gelar ? "border-red-500" : "border-gray-500"
-          } p-2 rounded-lg w-full`}
+          className="p-2 rounded-lg w-full"
           id="gelar"
-          value={gelar}
+          value={gelarDepan}
           onChange={(e) => {
-            setGelar(e.target.value);
+            setGelarDepan(e.target.value);
             setErrors({ ...errors, gelar: validateGelar(e.target.value) });
           }}
-          required
         >
           <option value="">Pilih Gelar</option>
           {gelarOptions.map((option) => (
@@ -262,9 +283,77 @@ export default function AddNews() {
             </option>
           ))}
         </select>
-        {errors.gelar && (
+        {/* {errors.gelar && (
           <p className="text-red-500 text-sm mt-1">{errors.gelar}</p>
-        )}
+        )} */}
+      </div>
+      <div className="relative">
+        <label
+          className="font-poppins text-lg block mb-2"
+          htmlFor="gelarBelakang"
+        >
+          Gelar Belakang:
+        </label>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={toggleDropdown}
+            className="w-full p-2 border-2 border-gray-500 rounded-lg text-left flex justify-between items-center"
+          >
+            <span>
+              {gelarBelakangList.length > 0
+                ? gelarBelakangList.join(", ")
+                : "Pilih Gelar Belakang"}
+            </span>
+            <svg
+              className={`w-4 h-4 transition-transform ${
+                isDropdownOpen ? "transform rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+              {gelarBelakangOptions.map((option) => (
+                <div
+                  key={option}
+                  className={`px-4 py-2 cursor-pointer hover:bg-blue-50 ${
+                    gelarBelakangList.includes(option) ? "bg-blue-100" : ""
+                  }`}
+                  onClick={() => {
+                    const newSelection = gelarBelakangList.includes(option)
+                      ? gelarBelakangList.filter((item) => item !== option)
+                      : [...gelarBelakangList, option];
+                    setGelarBelakangList(newSelection);
+                  }}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={gelarBelakangList.includes(option)}
+                      onChange={() => {}}
+                      className="mr-2"
+                    />
+                    {option}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <p className="text-sm text-gray-500 mt-1">
+          Klik untuk memilih gelar belakang
+        </p>
       </div>
       <div>
         <label className="font-poppins text-lg block mb-2" htmlFor="bidang">
@@ -279,7 +368,7 @@ export default function AddNews() {
           value={nama}
           onChange={(e) => {
             setNama(e.target.value);
-            setErrors({ ...errors, title: validateNama(e.target.value) });
+            setErrors({ ...errors, nama: validateNama(e.target.value) });
           }}
           required
         />
@@ -410,8 +499,7 @@ export default function AddNews() {
           }}
           required
         />
-        <img>
-        </img>
+        <img></img>
         {errors.scopusId && (
           <p className="text-red-500 text-sm mt-1">{errors.scopusId}</p>
         )}

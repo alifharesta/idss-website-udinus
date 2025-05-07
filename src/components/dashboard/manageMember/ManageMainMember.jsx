@@ -20,7 +20,7 @@ export default function ManageMainMember() {
       const { data, error } = await supabase
         .from("members")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true });
 
       if (error) throw error;
       setMembers(data);
@@ -100,19 +100,17 @@ export default function ManageMainMember() {
                     <img
                       src={item.image_url}
                       alt="avatar"
-                      className="w-14 h-14 object-fill"
+                      className="w-14 h-14 object-cover rounded-full"
                     />
                   ) : (
-                    <div className="w-20 h-20 bg-gray-200 rounded-full" />
+                    <span className="text-gray-400 text-xl">-</span>
                   )}
                 </td>
                 <td>{item.gelar}</td>
                 <td>{item.nama}</td>
                 <td>{item.bidang}</td>
                 <td>{item.jabatan}</td>
-                <td>
-                  {format(new Date(item.created_at), "dd/MM/yyyy")}
-                </td>
+                <td>{format(new Date(item.created_at), "dd/MM/yyyy")}</td>
                 <td className="flex gap-5 ml-10">
                   <Link to={`/dashboard/manage-members/edit/${item.id}`}>
                     <img
