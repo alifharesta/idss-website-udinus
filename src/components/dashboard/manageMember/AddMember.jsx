@@ -40,6 +40,7 @@ export default function AddMember() {
     "M.Cs.",
     "M.Si.",
     "M.Eng.",
+    "M.T."
   ];
 
   // Options for jabatan
@@ -48,6 +49,7 @@ export default function AddMember() {
     "Chairman",
     "Secretary 1",
     "Secretary 2",
+    "Academic Advisor",
     "Coordinator AI for Medical Science",
     "Coordinator AI for Natural Disaster",
     "Coordinator AI for Game",

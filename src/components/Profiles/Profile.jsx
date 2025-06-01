@@ -51,14 +51,16 @@ export default function Profile() {
   return (
     <>
       <NavbarCp />
-      <section className="container ml-14 py-4 px-8 mt-24">
-        <h1 className="text-4xl font-poppins font-bold mt-4 mb-8">Committee</h1>
+      <section className="container px-4 sm:px-6 md:px-8 lg:px-10 py-4 mt-24">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mt-4 mb-8 text-center">
+          Committee
+        </h1>
         <ul className="space-y-6">
           {members.map((person) => (
             <li key={person.id} className="border-b pb-4">
               <div className="flex flex-col space-y-2">
                 <div>
-                  <h2 className="text-3xl font-poppins font-medium">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-poppins font-medium text-center">
                     {person.gelar_depan} {person.nama}{" "}
                     {person.gelar_belakang && (
                       <span>
@@ -68,22 +70,22 @@ export default function Profile() {
                       </span>
                     )}
                   </h2>
-                  <p className="mt-2 font-light text-lg font-poppins">
+                  <p className="mt-2 font-light text-sm sm:text-base md:text-lg font-poppins text-center">
                     {person.jabatan}
                   </p>
-                  <p className="text-base font-poppins text-gray-600">
+                  <p className="text-xs sm:text-sm md:text-base font-poppins text-gray-600 text-center">
                     {person.bidang}
                   </p>
                 </div>
                 {/* profile container */}
-                <div className="flex gap-4 mt-2">
-                  <button className=" bg-white text-white font-poppins">
+                <div className="flex flex-col sm:flex-row gap-4 mt-2 justify-center">
+                  <button className="bg-white text-white font-poppins">
                     {person.scopus_id && (
                       <a
                         href={`${person.scopus_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-xs sm:text-sm font-poppins"
                       >
                         <img
                           src={scopusicon}
@@ -100,7 +102,7 @@ export default function Profile() {
                         href={`${person.sinta_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm font-poppins"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline text-xs sm:text-sm font-poppins"
                       >
                         <img
                           src={sintaicon}
