@@ -51,16 +51,16 @@ export default function Profile() {
   return (
     <>
       <NavbarCp />
-      <section className="container px-4 sm:px-6 md:px-8 lg:px-10 py-4 mt-24">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mt-4 mb-8 text-center">
+      <section className="container mx-6 sm:mx-12 md:mx-36 py-4 mt-24">
+        <h1 className="text-xl sm:text-2xl md:text-4xl font-poppins font-bold mt-4 mb-8">
           Committee
         </h1>
-        <ul className="space-y-6">
+        <ul className="space-y-4 sm:space-y-6">
           {members.map((person) => (
             <li key={person.id} className="border-b pb-4">
               <div className="flex flex-col space-y-2">
                 <div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-poppins font-medium text-center">
+                  <h2 className="text-lg sm:text-xl md:text-3xl font-poppins font-medium">
                     {person.gelar_depan} {person.nama}{" "}
                     {person.gelar_belakang && (
                       <span>
@@ -70,15 +70,15 @@ export default function Profile() {
                       </span>
                     )}
                   </h2>
-                  <p className="mt-2 font-light text-sm sm:text-base md:text-lg font-poppins text-center">
+                  <p className="mt-2 font-light text-sm sm:text-base md:text-lg font-poppins">
                     {person.jabatan}
                   </p>
-                  <p className="text-xs sm:text-sm md:text-base font-poppins text-gray-600 text-center">
+                  <p className="text-xs sm:text-sm md:text-base font-poppins text-gray-600">
                     {person.bidang}
                   </p>
                 </div>
                 {/* profile container */}
-                <div className="flex flex-col sm:flex-row gap-4 mt-2 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 mt-2">
                   <button className="bg-white text-white font-poppins">
                     {person.scopus_id && (
                       <a
