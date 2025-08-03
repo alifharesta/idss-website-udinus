@@ -123,6 +123,12 @@ export default function index(props) {
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
                   </Link>
                 </li>
+                <li>
+                  <Link to="/iprs" className="block py-2 group transition duration-300 text-white hover:text-[#2196F3] font-poppins">
+                    IPRS
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -159,6 +165,12 @@ export default function index(props) {
               <li>
                 <a href="/publications" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
                 Publications
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
+                </a>
+              </li>
+              <li>
+                <a href="/iprs" className="group transition duration-300 hover:text-[#2196F3] font-poppins">
+                IPRS
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#2196F3]"></span>
                 </a>
               </li>

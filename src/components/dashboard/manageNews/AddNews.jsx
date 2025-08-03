@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../../services/supabaseClient";
 import Swal from "sweetalert2";
@@ -94,7 +95,7 @@ export default function AddNews() {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
-
+  
   // Validate publish date
   const validatePublishDate = (value) => {
     if (!value) return "Tanggal publikasi harus diisi";
